@@ -1,0 +1,33 @@
+#include "ft_nm.h"
+
+static int get_options(char *op_str)
+{
+	int options;
+
+	if (op_str[0] != '-')
+		return (0);
+	options = 0;
+	options |= ft_strchr(op_str, 'r') ? REV_OP : 0;
+	options |= ft_strchr(op_str, 'n') ? NUM_OP : 0;
+	options |= ft_strchr(op_str, 'p') ? P_OP : 0;
+	return (options);
+}
+
+int			main(int argc, char *argv[])
+{
+	int options;
+
+	if (argc < 2)
+		return (-1);
+	if ((options = get_options(*++argv)))
+		argv++;
+	while (*argv)
+	{
+		if ((argc - (options ? 1 : 0)) > 2)
+			ft_printf("\n%s:\n", *argv);
+		if (-1 == process_file(*argv, options))
+			return (-1);
+		argv++;
+	}
+	return (0);
+}

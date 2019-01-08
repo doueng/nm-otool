@@ -1,0 +1,5 @@
+{
+        global:
+                foo = FUNCTION V0x400;
+                bar = DATA V0x800;
+};

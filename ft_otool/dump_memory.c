@@ -1,14 +1,17 @@
 #include "ft_otool.h"
 
-void		dump_memory(uint8_t *mem, int mem_size)
+void		dump_memory(uint8_t *mem, struct section_64 *text_section)
 {
-	size_t	pos;
-	int		i;
+	uint64_t	pos;
+	int			i;
+	int64_t	mem_size;
 
-	pos = 0;
-	while (mem_size > 0)
+	pos = text_section->addr;
+	mem += text_section->offset;
+	mem_size = text_section->size;
+	while (mem_size >= 0)
 	{
-		ft_printf("%016x\t", pos);
+		ft_printf("%016llx\t", pos);
 		i = 0;
 		while (i++ < 16 && mem_size--)
 			ft_printf("%02x ", *mem++);

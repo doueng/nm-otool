@@ -23,6 +23,8 @@ $(LIB):
 
 clean:
 	@/bin/rm -f $(SRCO_OTOOL)
+	@/bin/rm -rf $(OTOOL).dSYM
+	@/bin/rm -f compile_commands.json
 	@make -C $(LIBFT) clean
 
 fclean:

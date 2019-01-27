@@ -20,7 +20,7 @@ int			invalid_file(char *filename)
 
 int			invalid_file_type(char *filename)
 {
-	ft_printf("ft_nm: %s The file was not recognized as a valid object file\n", filename);
+	ft_printf("ft_nm: %s: The file was not recognized as a valid object file\n", filename);
 	return (-1);
 }
 

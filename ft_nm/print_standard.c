@@ -20,8 +20,8 @@ static char			get_type_letter(t_nmtree *symbol)
 	{
 		ft_memcpy(sect_name, symbol->sections[n_sect - 1].sectname, 16);
 		letter = ft_strequ(sect_name, "__text") ? 'T' : letter;
-		letter = ft_strequ(sect_name, "__bss") ? 'B' : letter;
 		letter = ft_strequ(sect_name, "__data") ? 'D' : letter;
+		ft_printf("hello\n");
 	}
 	return (type & N_EXT ? letter : letter | 0x20);
 }

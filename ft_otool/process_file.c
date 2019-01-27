@@ -15,6 +15,9 @@ int			process_file(char *filename, int options)
 		rv = (process_archive(bin, filename, options));
 	}
 	else
+	{
+		ft_printf("%s:\n", filename);
 		rv = (process_macho(bin, options));
+	}
 	return (rv == -1 ? -1 : free_bin(bin_struct));
 }

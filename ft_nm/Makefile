@@ -23,6 +23,8 @@ $(LIB):
 
 clean:
 	@/bin/rm -f $(SRCO_NM)
+	@/bin/rm -rf $(NM).dSYM
+	@/bin/rm -f compile_commands.json
 	@make -C $(LIBFT) clean
 
 fclean: clean

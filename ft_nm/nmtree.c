@@ -37,9 +37,9 @@ static void			nmtree_insert(t_nmtree **root, t_nmtree *new, int options,
 	}
 	cmp_ret = (*cmpf)(*root, new, options);
 	if (cmp_ret > 0)
-		nmtree_insert(&(*root)->right, new, options, cmpf);
+		nmtree_insert(&((*root)->right), new, options, cmpf);
 	else if (cmp_ret <= 0)
-		nmtree_insert(&(*root)->left, new, options, cmpf);
+		nmtree_insert(&((*root)->left), new, options, cmpf);
 }
 
 static void			*get_insert_function(int options)
@@ -63,11 +63,14 @@ t_nmtree			*insert_symbols(t_btinfo *btinfo, int options)
 	symbols_root = NULL;
 	while (btinfo->nsyms--)
 	{
+		if ((nlist->n_type & N_STAB) == 0)
+		{
 		name = &(btinfo->symtabstr[nlist->n_un.n_strx]);
 		if (!(new = create_nm_tree_node(nlist, name)))
 			return (NULL);
 		nmtree_insert(&symbols_root, new,
 						options, get_insert_function(options));
+		}
 		nlist++;
 	}
 	return (symbols_root);
@@ -78,9 +81,7 @@ void				print_tree(t_nmtree *symbol,
 {
 	if (!symbol)
 		return ;
-	if (symbol->left)
-		print_tree(symbol->left, print_function);
+	print_tree(symbol->left, print_function);
 	print_function(symbol);
-	if (symbol->right)
-		print_tree(symbol->right, print_function);
+	print_tree(symbol->right, print_function);
 }

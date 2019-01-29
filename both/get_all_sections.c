@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_all_sections.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dengstra <dengstra@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/27 16:04:42 by dengstra          #+#    #+#             */
+/*   Updated: 2019/01/28 17:55:10 by dengstra         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "nm_otool.h"
 
-static int			get_nsects(uint8_t *bin, struct load_command *all_ldcmds, int ncmds)
+static int			get_nsects(uint8_t *bin, struct load_command *all_ldcmds,
+								int ncmds)
 {
 	int		nsects;
 
@@ -16,8 +29,8 @@ static int			get_nsects(uint8_t *bin, struct load_command *all_ldcmds, int ncmds
 }
 
 struct section_64	*get_allsects(uint8_t *bin,
-								  struct load_command *all_ldcmds,
-								  int ncmds)
+								struct load_command *all_ldcmds,
+								int ncmds)
 {
 	int							nsects;
 	struct section_64			*all_sections;
@@ -26,7 +39,8 @@ struct section_64	*get_allsects(uint8_t *bin,
 	size_t						curr_sections_size;
 
 	nsects = get_nsects(bin, all_ldcmds, ncmds);
-	if (!(all_sections = (struct section_64*)malloc(nsects * sizeof(*all_sections))))
+	if (!(all_sections =
+			(struct section_64*)malloc(nsects * sizeof(*all_sections))))
 		return (NULL);
 	curr_section = all_sections;
 	while (ncmds--)

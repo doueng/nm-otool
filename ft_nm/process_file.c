@@ -1,8 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process_file.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dengstra <dengstra@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/27 16:07:48 by dengstra          #+#    #+#             */
+/*   Updated: 2019/01/27 16:16:01 by dengstra         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_nm.h"
 
 int			invalid_file(char *filename)
 {
-	/* /Library/Developer/CommandLineTools/usr/bin/nm: ft_nm.dSYM: Is a directory. */
 	struct stat st;
 	int			fd;
 
@@ -20,7 +31,8 @@ int			invalid_file(char *filename)
 
 int			invalid_file_type(char *filename)
 {
-	ft_printf("ft_nm: %s: The file was not recognized as a valid object file\n", filename);
+	ft_printf("ft_nm: %s: The file was not recognized as a valid object file\n",
+				filename);
 	return (-1);
 }
 

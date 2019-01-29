@@ -6,7 +6,7 @@
 /*   By: dengstra <dengstra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/27 13:25:25 by dengstra          #+#    #+#             */
-/*   Updated: 2019/01/27 13:26:08 by dengstra         ###   ########.fr       */
+/*   Updated: 2019/01/27 16:17:27 by dengstra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ t_bin		*get_bin(char *filename)
 		return (NULL);
 	if (-1 == fstat(fd, &st))
 		return (NULL);
-	// ft_printf("size %d\n", st.st_size);
 	bin->head = mmap(0, st.st_size, PROT_READ, MAP_SHARED, fd, 0);
 	bin->size = st.st_size;
 	if (-1 == close(fd))

@@ -6,13 +6,13 @@
 /*   By: dengstra <dengstra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/27 13:25:28 by dengstra          #+#    #+#             */
-/*   Updated: 2019/01/27 13:25:29 by dengstra         ###   ########.fr       */
+/*   Updated: 2019/01/27 19:14:48 by dengstra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
-	
-int			process_macho(uint8_t *bin, int options)
+
+int				process_macho(uint8_t *bin, int options)
 {
 	t_env					*env;
 	struct symtab_command	*symtab;
@@ -25,12 +25,8 @@ int			process_macho(uint8_t *bin, int options)
 		return (1);
 	if (!(btinfo = (t_btinfo*)get_btinfo(bin, symtab)))
 		return (-1);
-	btinfo->sections = env->sections;
 	if (!(nmtree = (t_nmtree*)insert_symbols(btinfo, options)))
 		return (-1);
 	print_tree(nmtree, print_standard);
-	free_env(env);
-	free_btinfo(btinfo);
-	free_nmtree(nmtree);
 	return (0);
 }

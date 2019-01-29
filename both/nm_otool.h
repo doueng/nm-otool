@@ -6,7 +6,7 @@
 /*   By: dengstra <dengstra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/27 13:27:57 by dengstra          #+#    #+#             */
-/*   Updated: 2019/01/27 16:03:19 by dengstra         ###   ########.fr       */
+/*   Updated: 2019/01/27 18:24:46 by dengstra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,14 @@ typedef struct					s_env
 int 							is_macho(uint8_t *bin);
 void							free_env(t_env *env);
 int								process_macho(uint8_t *bin, int options);;
-int								process_archive(uint8_t *bin, char *archive_name, int options);
+int								process_archive(uint8_t *bin, char *archive_name,
+												int options);
 t_env							*get_env(uint8_t *bin);
 int								is_archive(uint8_t *bin);
 int								free_bin(t_bin *bin);
 struct section_64				*get_allsects(uint8_t *bin,
-											  struct load_command *all_ldcmds,
-											  int ncmds);
+											struct load_command *all_ldcmds,
+											int ncmds);
 t_bin							*get_bin(char *filename);
 int								ft_error_one(char *error_text);
 void							*ft_error(char *error_text);

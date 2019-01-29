@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   nmtree.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dengstra <dengstra@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/27 16:07:42 by dengstra          #+#    #+#             */
+/*   Updated: 2019/01/27 16:16:30 by dengstra         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_nm.h"
 
 static t_nmtree		*create_nm_tree_node(struct nlist_64 *nlist, char *name)
@@ -13,8 +25,8 @@ static t_nmtree		*create_nm_tree_node(struct nlist_64 *nlist, char *name)
 	return (new);
 }
 
-static void				nmtree_insert(t_nmtree **root, t_nmtree *new, int options,
-									 int (*cmpf)(t_nmtree *, t_nmtree *, int))
+static void			nmtree_insert(t_nmtree **root, t_nmtree *new, int options,
+									int (*cmpf)(t_nmtree *, t_nmtree *, int))
 {
 	int cmp_ret;
 
@@ -30,7 +42,7 @@ static void				nmtree_insert(t_nmtree **root, t_nmtree *new, int options,
 		nmtree_insert(&(*root)->left, new, options, cmpf);
 }
 
-static void				*get_insert_function(int options)
+static void			*get_insert_function(int options)
 {
 	int (*cmpf)(t_nmtree *, t_nmtree *, int);
 
@@ -40,7 +52,7 @@ static void				*get_insert_function(int options)
 	return (cmpf);
 }
 
-t_nmtree				*insert_symbols(t_btinfo *btinfo, int options)
+t_nmtree			*insert_symbols(t_btinfo *btinfo, int options)
 {
 	char				*name;
 	t_nmtree			*new;
@@ -54,15 +66,15 @@ t_nmtree				*insert_symbols(t_btinfo *btinfo, int options)
 		name = &(btinfo->symtabstr[nlist->n_un.n_strx]);
 		if (!(new = create_nm_tree_node(nlist, name)))
 			return (NULL);
-		new->sections = btinfo->sections;
-		nmtree_insert(&symbols_root, new, options, get_insert_function(options));
+		nmtree_insert(&symbols_root, new,
+						options, get_insert_function(options));
 		nlist++;
 	}
 	return (symbols_root);
 }
 
 void				print_tree(t_nmtree *symbol,
-							   void (*print_function)(t_nmtree *))
+							void (*print_function)(t_nmtree *))
 {
 	if (!symbol)
 		return ;

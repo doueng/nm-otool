@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_filename.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dengstra <dengstra@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/27 16:04:55 by dengstra          #+#    #+#             */
+/*   Updated: 2019/01/27 16:18:35 by dengstra         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "nm_otool.h"
 
 char		*get_filename(uint8_t *bin)
@@ -23,25 +35,3 @@ char		*get_filename(uint8_t *bin)
 	}
 	return (name);
 }
-
-/* char		*get_filename(int fd, struct ar_hdr *ar_header) */
-/* { */
-/* 	char	*name; */
-/* 	int		name_size; */
-
-/* 	if (0 == ft_memcmp(ar_header->ar_name, "#1/", 3)) */
-/* 	{ */
-/* 		name_size = ft_atoi(ar_header->ar_name + 3); */
-/* 		if (!(name = ft_strnew(name_size))) */
-/* 			return (NULL); */
-/* 		if (-1 == read(fd, name, name_size)) */
-/* 			return (NULL); */
-/* 	} */
-/* 	else */
-/* 	{ */
-/* 		if (!(name = ft_strnew(16))) */
-/* 			return (NULL); */
-/* 		ft_memcpy(name, ar_header->ar_name, 16); */
-/* 	} */
-/* 	return (name); */
-/* } */

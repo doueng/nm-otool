@@ -14,10 +14,19 @@
 
 int	is_macho(uint8_t *bin)
 {
+	ft_printf("%llx\n", bin);
+	ft_printf("%llx\n", FAT_MAGIC);
 	return (*(uint32_t*)bin == MH_MAGIC_64);
 }
 
 int	is_archive(uint8_t *bin)
 {
 	return (0 == ft_memcmp(bin, ARMAG, SARMAG));
+}
+
+int is_fat(uint8_t *bin)
+{
+	ft_printf("%llx\n", bin);
+	ft_printf("%llx\n", FAT_MAGIC);
+	return (*(uint32_t*)bin == FAT_MAGIC_64);
 }

@@ -12,13 +12,6 @@
 
 #include "ft_nm.h"
 
-
-#define N_UNDF  0x0             /* undefined, n_sect == NO_SECT */
-#define N_ABS   0x2             /* absolute, n_sect == NO_SECT */
-#define N_SECT  0xe             /* defined in section number n_sect */
-#define N_PBUD  0xc             /* prebound undefined (defined in a dylib) */
-#define N_INDR  0xa             /* indirect */
-
 static char			get_type_letter(t_nmtree *symbol)
 {
 	char			letter;

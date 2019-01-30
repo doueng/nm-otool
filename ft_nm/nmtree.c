@@ -52,7 +52,7 @@ static void			*get_insert_function(int options)
 	return (cmpf);
 }
 
-t_nmtree			*insert_symbols(t_btinfo *btinfo, int options)
+t_nmtree			*insert_symbols(t_env *env, t_btinfo *btinfo, int options)
 {
 	char				*name;
 	t_nmtree			*new;
@@ -65,13 +65,13 @@ t_nmtree			*insert_symbols(t_btinfo *btinfo, int options)
 	{
 		if ((nlist->n_type & N_STAB) == 0)
 		{
-		name = &(btinfo->symtabstr[nlist->n_un.n_strx]);
-		if (!(new = create_nm_tree_node(nlist, name)))
-			return (NULL);
-		nmtree_insert(&symbols_root, new,
-						options, get_insert_function(options));
+			name = &(btinfo->symtabstr[rev_bytes(env, nlist->n_un.n_strx)]);
+			if (!(new = create_nm_tree_node(nlist, name)))
+				return (NULL);
+			nmtree_insert(&symbols_root, new,
+							options, get_insert_function(options));
 		}
-		nlist++;
+		nlist = ft_incbyte(nlist, env->is_64 ? sizeof(*nlist) : sizeof(struct nlist));
 	}
 	return (symbols_root);
 }

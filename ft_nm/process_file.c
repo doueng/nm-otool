@@ -31,7 +31,7 @@ int			invalid_file(char *filename)
 
 int			invalid_file_type(char *filename)
 {
-	ft_printf("ft_nm: %s: The file was not recognized as a valid object file\n",
+	ft_printf("ft_nm: %s The file was not recognized as a valid object file\n",
 				filename);
 	return (-1);
 }
@@ -40,19 +40,28 @@ int			process_file(char *filename, int options)
 {
 	t_bin				*bin_struct;
 	uint8_t				*bin;
+	uint32_t			header;
 	int					rv;
+	t_env				*env;
 
 	if (-1 == invalid_file(filename))
 		return (-1);
 	if (NULL == (bin_struct = get_bin(filename)))
 		return (-1);
 	bin = bin_struct->head;
+	if (!(env = (t_env*)ft_memalloc(sizeof(t_env))))
+		return (-1);
+	env = get_env(env, bin);
+	header = *(uint32_t*)bin;
 	if (is_archive(bin))
-		rv = process_archive(bin, filename, options);
-	else if (is_macho(bin))
-		rv = process_macho(bin, options);
+		rv = process_archive(env, filename, options);
+	else if (header == FAT_MAGIC_64 || header == FAT_CIGAM)
+		rv = process_fat(env, options);
+	else if (header == MH_MAGIC_64 || header == MH_MAGIC)
+		rv = process_macho(env, options);
 	else
 		rv = invalid_file_type(filename);
 	free_bin(bin_struct);
+	free(env);
 	return (rv);
 }

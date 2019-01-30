@@ -34,11 +34,13 @@ static long		get_num_ranlibs(uint8_t *bin)
 	return (*((long*)bin) / sizeof(struct ranlib));
 }
 
-int				process_archive(uint8_t *bin, char *archive_name, int options)
+int				process_archive(t_env *env, char *archive_name, int options)
 {
 	int						num_ranlib;
 	char					*filename;
+	uint8_t					*bin;
 
+	bin = env->bin.head;
 	bin += ft_strlen(ARMAG);
 	num_ranlib = get_num_ranlibs(bin);
 	bin += ft_atoi((((struct ar_hdr*)bin)->ar_size));
@@ -53,7 +55,8 @@ int				process_archive(uint8_t *bin, char *archive_name, int options)
 			return (-1);
 		ft_printf("\n%s(%s):\n", archive_name, filename);
 		free(filename);
-		if (-1 == process_macho(move_past_ar_hdr(bin), options))
+		env->bin.head = move_past_ar_hdr(bin);
+		if (-1 == process_macho(env, options))
 			return (-1);
 		bin += ft_atoi((((struct ar_hdr*)bin)->ar_size));
 		bin += sizeof(struct ar_hdr);

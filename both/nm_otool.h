@@ -32,17 +32,21 @@ typedef struct					s_bin
 typedef struct					s_env
 {
 	struct mach_header_64		*macho;
-	struct section_64			*sections;
 	struct load_command			*ldcmds;
-	t_bin						*bin;
+	char						is_64;
+	char						rev_bytes;
+	t_bin						bin;
 }								t_env;
 
+uint64_t						rev_bytes(t_env *env, uint64_t bytes);
+int								process_fat(t_env *env, int options);
+int								is_fat(uint8_t *bin);
 int 							is_macho(uint8_t *bin);
 void							free_env(t_env *env);
-int								process_macho(uint8_t *bin, int options);;
-int								process_archive(uint8_t *bin, char *archive_name,
+int								process_macho(t_env *env, int options);;
+int								process_archive(t_env *env, char *archive_name,
 												int options);
-t_env							*get_env(uint8_t *bin);
+t_env							*get_env(t_env *env, uint8_t *bin);
 int								is_archive(uint8_t *bin);
 int								free_bin(t_bin *bin);
 struct section_64				*get_allsects(uint8_t *bin,

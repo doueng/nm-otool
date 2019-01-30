@@ -12,20 +12,17 @@
 
 #include "ft_nm.h"
 
-int				process_macho(uint8_t *bin, int options)
+int				process_macho(t_env *env, int options)
 {
-	t_env					*env;
 	struct symtab_command	*symtab;
 	t_btinfo				*btinfo;
 	t_nmtree				*nmtree;
 
-	if (!(env = get_env(bin)))
-		return (-1);
 	if (!(symtab = (struct symtab_command*)get_ldcmd(env, LC_SYMTAB)))
 		return (1);
-	if (!(btinfo = (t_btinfo*)get_btinfo(bin, symtab)))
+	if (!(btinfo = (t_btinfo*)get_btinfo(env, symtab)))
 		return (-1);
-	if (!(nmtree = (t_nmtree*)insert_symbols(btinfo, options)))
+	if (!(nmtree = (t_nmtree*)insert_symbols(env, btinfo, options)))
 		return (-1);
 	print_tree(nmtree, print_standard);
 	return (0);

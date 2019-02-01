@@ -52,6 +52,7 @@ int			process_file(char *filename, int options)
 	if (!(env = (t_env*)ft_memalloc(sizeof(t_env))))
 		return (-1);
 	env = get_env(env, bin);
+	env->filename = filename;
 	header = *(uint32_t*)bin;
 	if (is_archive(bin))
 		rv = process_archive(env, filename, options);

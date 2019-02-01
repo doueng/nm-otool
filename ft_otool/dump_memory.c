@@ -34,7 +34,7 @@ static void	dump64(t_env *env, struct section_64 *text_section)
 	}
 }
 
-static void	dump(t_env *env, struct section *text_section)
+static void	dump32(t_env *env, struct section *text_section)
 {
 	uint32_t	pos;
 	int			i;
@@ -66,6 +66,6 @@ int			dump_memory(t_env *env, void *text_section)
 	if (env->is_64)
 		dump64(env, text_section);
 	else
-		dump(env, text_section);
+		dump32(env, text_section);
 	return (0);
 }

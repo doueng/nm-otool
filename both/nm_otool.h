@@ -35,6 +35,7 @@ typedef struct					s_env
 	struct load_command			*ldcmds;
 	char						is_64;
 	char						rev_bytes;
+	char						*filename;
 	t_bin						bin;
 }								t_env;
 

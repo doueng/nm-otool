@@ -12,7 +12,7 @@
 
 #include "ft_nm.h"
 
-static t_nmtree		*create_nm_tree_node(struct nlist_64 *nlist, char *name)
+static t_nmtree		*create_nm_tree_node(t_env *env, struct nlist_64 *nlist, char *name)
 {
 	t_nmtree *new;
 
@@ -22,6 +22,7 @@ static t_nmtree		*create_nm_tree_node(struct nlist_64 *nlist, char *name)
 	new->nlist = nlist;
 	new->left = NULL;
 	new->right = NULL;
+	new->env = env;
 	return (new);
 }
 
@@ -66,7 +67,7 @@ t_nmtree			*insert_symbols(t_env *env, t_btinfo *btinfo, int options)
 		if ((nlist->n_type & N_STAB) == 0)
 		{
 			name = &(btinfo->symtabstr[rev_bytes(env, nlist->n_un.n_strx)]);
-			if (!(new = create_nm_tree_node(nlist, name)))
+			if (!(new = create_nm_tree_node(env, nlist, name)))
 				return (NULL);
 			nmtree_insert(&symbols_root, new,
 							options, get_insert_function(options));

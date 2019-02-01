@@ -18,6 +18,7 @@
 typedef struct				s_nmtree
 {
 	char					*name;
+	t_env					*env;
 	struct nlist_64			*nlist;
 	struct s_nmtree			*left;
 	struct s_nmtree			*right;

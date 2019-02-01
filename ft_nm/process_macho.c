@@ -12,6 +12,15 @@
 
 #include "ft_nm.h"
 
+static void		freetree(t_nmtree *root)
+{
+	if (!root)
+		return ;
+	freetree(root->left);
+	freetree(root->right);
+	free(root);
+}
+
 int				process_macho(t_env *env, int options)
 {
 	struct symtab_command	*symtab;
@@ -19,11 +28,13 @@ int				process_macho(t_env *env, int options)
 	t_nmtree				*nmtree;
 
 	if (!(symtab = (struct symtab_command*)get_ldcmd(env, LC_SYMTAB)))
-		return (1);
+		return (-1);
 	if (!(btinfo = (t_btinfo*)get_btinfo(env, symtab)))
 		return (-1);
 	if (!(nmtree = (t_nmtree*)insert_symbols(env, btinfo, options)))
 		return (-1);
 	print_tree(nmtree, print_standard);
+	free(btinfo);
+	freetree(nmtree);
 	return (0);
 }

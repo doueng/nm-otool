@@ -21,7 +21,7 @@ struct load_command	*get_ldcmd(t_env *env, uint32_t cmd)
 	ncmds = rev_bytes(env, env->macho->ncmds);
 	while (ncmds--)
 	{
-		if (ldcmds->cmd == cmd)
+		if (rev_bytes(env, ldcmds->cmd) == cmd)
 			return (ldcmds);
 		ldcmds = ft_incbyte(ldcmds, rev_bytes(env, ldcmds->cmdsize));
 	}

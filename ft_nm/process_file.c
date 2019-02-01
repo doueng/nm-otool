@@ -26,7 +26,7 @@ int			invalid_file(char *filename)
 		ft_printf("ft_nm: %s: Is a directory.\n", filename);
 		return (-1);
 	}
-	return (0);
+	return (close(fd));
 }
 
 int			invalid_file_type(char *filename)

@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nm.h"
+#include "nm_otool.h"
 
-int			invalid_file(char *filename)
+static int	invalid_file(char *filename)
 {
 	struct stat st;
 	int			fd;
@@ -29,7 +29,7 @@ int			invalid_file(char *filename)
 	return (close(fd));
 }
 
-int			invalid_file_type(char *filename)
+static int	invalid_file_type(char *filename)
 {
 	ft_printf("ft_nm: %s The file was not recognized as a valid object file\n",
 				filename);

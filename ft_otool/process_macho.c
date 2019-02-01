@@ -12,53 +12,54 @@
 
 #include "ft_otool.h"
 
-// static struct section_64	*get_text_section(struct section_64 *all_sections)
-// {
-// 	struct section_64 *text_section;
-
-// 	text_section = NULL;
-// 	while (all_sections && !text_section)
-// 	{
-// 		if (ft_strnequ(all_sections->segname, "__TEXT", 6)
-// 			&& ft_strnequ(all_sections->sectname, "__text", 6))
-// 			text_section = all_sections;
-// 		all_sections++;
-// 	}
-// 	return (text_section);
-// }
-
-static struct section_64	*get_text_section(t_env *env)
+static struct section_64	*get_text_section64(t_env *env)
 {
 	struct section_64	*text_section;
 	int					ncmds;
 	struct load_command	*cmd;
 	uint8_t				*ldcmds;
 
-	ncmds = env->macho->ncmds;
+	ncmds = rev_bytes(env, env->macho->ncmds);
 	ldcmds = (uint8_t*) env->ldcmds;
 	text_section = NULL;
 	while (--ncmds && !text_section)
 	{
 		cmd = (struct load_command*)ldcmds;
-		if (cmd->cmd == LC_SEGMENT_64)
-			if (ft_strnequ(((struct segment_command_64*)cmd)->segname, "__TEXT", 6))
+		if (rev_bytes(env, cmd->cmd) == LC_SEGMENT_64)
+			if (ft_strequ(((struct segment_command_64*)cmd)->segname, "__TEXT"))
 				text_section = (struct section_64*)(ldcmds + sizeof(struct segment_command_64));
-		ldcmds += cmd->cmdsize;
+		ldcmds += rev_bytes(env, cmd->cmdsize);
 	}
 	return (text_section);
 }
-int							process_macho(uint8_t *bin, int options)
-{
-	struct section_64		*text_section;
-	t_env					*env;
 
+
+static struct section	*get_text_section(t_env *env)
+{
+	struct section		*text_section;
+	int					ncmds;
+	struct load_command	*cmd;
+	uint8_t				*ldcmds;
+
+	ncmds = rev_bytes(env, env->macho->ncmds);
+	ldcmds = (uint8_t*) env->ldcmds;
+	text_section = NULL;
+	while (--ncmds && !text_section)
+	{
+		cmd = (struct load_command*)ldcmds;
+		if (rev_bytes(env, cmd->cmd) == LC_SEGMENT)
+			if (ft_strequ(((struct segment_command*)cmd)->segname, "__TEXT"))
+				text_section = (struct section*)(ldcmds + sizeof(struct segment_command));
+		ldcmds += rev_bytes(env, cmd->cmdsize);
+	}
+	return (text_section);
+}
+
+int							process_macho(t_env *env, int options)
+{
 	(void)&options; // fix
-	if (!(env = get_env(bin)))
-		return (-1);
-	if (!(text_section = get_text_section(env)))
-		return (-1);
 	ft_printf("Contents of (__TEXT,__text) section\n");
-	dump_memory(bin, text_section);
-	free_env(env);
-	return (0);
+	if (env->is_64)
+		return (dump_memory(env, get_text_section64(env)));
+	return (dump_memory(env, get_text_section(env)));
 }

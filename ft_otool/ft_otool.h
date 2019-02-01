@@ -15,10 +15,8 @@
 
 #include "../both/nm_otool.h"
 
-#define						DUMP_OP 0b1
-
-void						dump_memory(uint8_t *mem, struct section_64 *text_section);
+int							dump_memory(t_env *env, void *text_section);
 int							process_file(char *filename, int options);
-int							process_macho(uint8_t *bin, int options);
+int							process_macho(t_env *env, int options);
 
 #endif

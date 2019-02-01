@@ -38,6 +38,7 @@ typedef struct					s_env
 	t_bin						bin;
 }								t_env;
 
+t_env							*get_env(t_env *env, uint8_t *bin);
 uint64_t						rev_bytes(t_env *env, uint64_t bytes);
 int								process_fat(t_env *env, int options);
 int								is_fat(uint8_t *bin);

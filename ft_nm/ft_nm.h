@@ -39,9 +39,6 @@ int							process_file(char *filename, int options);
 int							process_macho(t_env *env, int options);
 struct load_command			*get_ldcmd(t_env *env, uint32_t cmd);
 t_btinfo					*get_btinfo(t_env *env, struct symtab_command *symtab);
-void						free_env(t_env *env);
-void						free_btinfo(t_btinfo *btinfo);
-void						free_nmtree(t_nmtree *root);
 t_nmtree					*insert_symbols(t_env *env, t_btinfo *btinfo, int options);
 void						print_tree(t_nmtree *symbol,
 											void (*print_function)(t_nmtree *));

@@ -37,12 +37,6 @@ enum
 	MALLOC_FAILED
 };
 
-typedef struct					s_bin
-{
-	size_t						size;
-	void						*head;
-}								t_bin;
-
 typedef struct					s_env
 {
 	struct mach_header_64		*macho;
@@ -50,9 +44,11 @@ typedef struct					s_env
 	char						is_64;
 	char						rev_bytes;
 	char						*filename;
-	t_bin						bin;
+	size_t						filesize;
+	void						*filehead;
 }								t_env;
 
+t_env							*update_env(t_env *env);
 void							*ft_error(int error, char *file, int line);
 int								ft_error_one(int error, char *file, int line);
 void							*incbytes_rev(t_env *env, void *mem, size_t inc_size);
@@ -67,7 +63,6 @@ int								process_macho(t_env *env, int options);;
 int								process_archive(t_env *env, char *archive_name,
 												int options);
 int								is_archive(uint8_t *bin);
-int								free_bin(t_bin *bin);
 struct section_64				*get_allsects(uint8_t *bin,
 											struct load_command *all_ldcmds,
 											int ncmds);

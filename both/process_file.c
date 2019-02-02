@@ -32,7 +32,7 @@ static int	processor(t_env *env, char *filename, int options)
 {
 	uint32_t			header;
 
-	header = env->macho->magic;
+	header = *((uint32_t*)(env->filehead));
 	if (ft_strequ((void*)&header, ARMAG))
 		return (process_archive(env, filename, options));
 	else if (header == FAT_MAGIC_64 || header == FAT_CIGAM)

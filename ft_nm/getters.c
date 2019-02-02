@@ -37,11 +37,10 @@ t_btinfo			*get_btinfo(t_env *env, struct symtab_command *symtab)
 	bin = env->macho;
 	if (!(info = (t_btinfo*)ft_memalloc(sizeof(t_btinfo))))
 		return (ft_error(MALLOC_FAILED, __FILE__, __LINE__));
-	if (!(info->nlist = (struct nlist_64*) incbytes_rev(env, bin, symtab->symoff)))
+	if (!(info->nlist = incbytes_rev(env, bin, symtab->symoff)))
 		return (ft_error(CORRUPT_FILE, __FILE__, __LINE__));
-	if (!(info->symtabstr = (char *) incbytes_rev(env, bin, symtab->stroff)))
+	if (!(info->symtabstr = incbytes_rev(env, bin, symtab->stroff)))
 		return (ft_error(CORRUPT_FILE, __FILE__, __LINE__));
 	info->nsyms = rev_bytes(env, symtab->nsyms);
 	return (info);
 }
-

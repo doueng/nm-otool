@@ -17,7 +17,7 @@ static t_nmtree		*create_nm_tree_node(t_env *env, struct nlist_64 *nlist, char *
 	t_nmtree *new;
 
 	if (!(new = (t_nmtree*)malloc(sizeof(t_nmtree))))
-		return (NULL);
+		return (ft_error(MALLOC_FAILED, __FILE__, __LINE__));
 	new->name = name;
 	new->nlist = nlist;
 	new->left = NULL;
@@ -72,7 +72,8 @@ t_nmtree			*insert_symbols(t_env *env, t_btinfo *btinfo, int options)
 			nmtree_insert(&symbols_root, new,
 							options, get_insert_function(options));
 		}
-		nlist = ft_incbyte(nlist, env->is_64 ? sizeof(*nlist) : sizeof(struct nlist));
+		if (!(nlist = incbytes(env, nlist, env->is_64 ? sizeof(*nlist) : sizeof(struct nlist))))
+			return (ft_error(CORRUPT_FILE, __FILE__, __LINE__));
 	}
 	return (symbols_root);
 }

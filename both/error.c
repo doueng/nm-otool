@@ -12,14 +12,35 @@
 
 #include "nm_otool.h"
 
-void	*ft_error(char *error_text)
+static void		print_msg(int error, char *file, int line)
 {
-	ft_printf("%s\n", error_text);
+	char *msg;
+
+	msg = "ERROR";
+	msg = (error == CORRUPT_FILE) ? "Corrupt file" : msg;
+	msg = (error == INVALID_FILE) ? "Invalid file" : msg;
+	msg = (error == FSTAT_FAILED) ? "fstat failed" : msg;
+	msg = (error == OPEN_FAILED) ? "open failed" : msg;
+	msg = (error == CLOSE_FAILED) ? "close failed" : msg;
+	msg = (error == MMAP_FAILED) ? "mmap failed" : msg;
+	msg = (error == NO_SYMTAB) ? "no symtab" : msg;
+	msg = (error == MALLOC_FAILED) ? "malloc failed" : msg;
+	ft_putstr_fd("ERROR:\t", 2);
+	ft_putendl_fd(msg, 2);
+	ft_putstr_fd("FILE:\t", 2);
+	ft_putendl_fd(file, 2);
+	ft_putstr_fd("LINE:\t", 2);
+	ft_putendl_fd(ft_itoa(line), 2);
+}
+
+void			*ft_error(int error, char *file, int line)
+{
+	print_msg(error, file, line);
 	return (NULL);
 }
 
-int		ft_error_one(char *error_text)
+int				ft_error_one(int error, char *file, int line)
 {
-	ft_printf("%s\n", error_text);
+	print_msg(error, file, line);
 	return (-1);
 }

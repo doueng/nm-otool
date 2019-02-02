@@ -23,7 +23,8 @@ struct load_command	*get_ldcmd(t_env *env, uint32_t cmd)
 	{
 		if (rev_bytes(env, ldcmds->cmd) == cmd)
 			return (ldcmds);
-		ldcmds = ft_incbyte(ldcmds, rev_bytes(env, ldcmds->cmdsize));
+		if (!(ldcmds = incbytes_rev(env, ldcmds, ldcmds->cmdsize)))
+			return (NULL);
 	}
 	return (NULL);
 }
@@ -31,13 +32,15 @@ struct load_command	*get_ldcmd(t_env *env, uint32_t cmd)
 t_btinfo			*get_btinfo(t_env *env, struct symtab_command *symtab)
 {
 	t_btinfo	*info;
-	uint8_t		*bin;
+	void		*bin;
 
-	bin = env->bin.head;
+	bin = env->macho;
 	if (!(info = (t_btinfo*)ft_memalloc(sizeof(t_btinfo))))
-		return (NULL);
-	info->nlist = (struct nlist_64*) (bin + rev_bytes(env, symtab->symoff));
-	info->symtabstr = (char *) (bin + rev_bytes(env, symtab->stroff));
+		return (ft_error(MALLOC_FAILED, __FILE__, __LINE__));
+	if (!(info->nlist = (struct nlist_64*) incbytes_rev(env, bin, symtab->symoff)))
+		return (ft_error(CORRUPT_FILE, __FILE__, __LINE__));
+	if (!(info->symtabstr = (char *) incbytes_rev(env, bin, symtab->stroff)))
+		return (ft_error(CORRUPT_FILE, __FILE__, __LINE__));
 	info->nsyms = rev_bytes(env, symtab->nsyms);
 	return (info);
 }

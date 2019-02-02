@@ -28,7 +28,7 @@ int				process_macho(t_env *env, int options)
 	t_nmtree				*nmtree;
 
 	if (!(symtab = (struct symtab_command*)get_ldcmd(env, LC_SYMTAB)))
-		return (-1);
+		return (ft_error_one(NO_SYMTAB, __FILE__, __LINE__));
 	if (!(btinfo = (t_btinfo*)get_btinfo(env, symtab)))
 		return (-1);
 	if (!(nmtree = (t_nmtree*)insert_symbols(env, btinfo, options)))

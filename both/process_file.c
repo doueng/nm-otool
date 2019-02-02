@@ -18,51 +18,42 @@ static int	invalid_file(char *filename)
 	int			fd;
 
 	if (-1 == (fd = (open(filename, O_RDONLY))))
-		return (-1);
+		return (ft_error_one(OPEN_FAILED, __FILE__, __LINE__));
 	if (-1 == fstat(fd, &st))
-		return (-1);
+		return (ft_error_one(FSTAT_FAILED, __FILE__, __LINE__));
+	if (st.st_size < 100) // check
+		return (ft_error_one(CORRUPT_FILE, __FILE__, __LINE__));
 	if (st.st_mode & S_IFDIR)
-	{
-		ft_printf("ft_nm: %s: Is a directory.\n", filename);
-		return (-1);
-	}
+		return (ft_error_one(INVALID_FILE, __FILE__, __LINE__));
 	return (close(fd));
 }
 
-static int	invalid_file_type(char *filename)
+static int	processor(t_env *env, char *filename, int options)
 {
-	ft_printf("ft_nm: %s The file was not recognized as a valid object file\n",
-				filename);
-	return (-1);
+	uint32_t			header;
+
+	header = env->macho->magic;
+	if (ft_strequ((void*)&header, ARMAG))
+		return (process_archive(env, filename, options));
+	else if (header == FAT_MAGIC_64 || header == FAT_CIGAM)
+		return (process_fat(env, options));
+	else if (header == MH_MAGIC_64 || header == MH_MAGIC)
+		return (process_macho(env, options));
+	return (ft_error_one(INVALID_FILE, __FILE__, __LINE__));
 }
 
 int			process_file(char *filename, int options)
 {
-	t_bin				*bin_struct;
-	uint8_t				*bin;
-	uint32_t			header;
 	int					rv;
 	t_env				*env;
 
+	rv = 0;
 	if (-1 == invalid_file(filename))
 		return (-1);
-	if (NULL == (bin_struct = get_bin(filename)))
+	if (!(env = get_env(filename)))
 		return (-1);
-	bin = bin_struct->head;
-	if (!(env = (t_env*)ft_memalloc(sizeof(t_env))))
-		return (-1);
-	env = get_env(env, bin);
-	env->filename = filename;
-	header = *(uint32_t*)bin;
-	if (is_archive(bin))
-		rv = process_archive(env, filename, options);
-	else if (header == FAT_MAGIC_64 || header == FAT_CIGAM)
-		rv = process_fat(env, options);
-	else if (header == MH_MAGIC_64 || header == MH_MAGIC)
-		rv = process_macho(env, options);
-	else
-		rv = invalid_file_type(filename);
-	free_bin(bin_struct);
+	if (-1 == processor(env, filename, options))
+		rv = -1;
 	free(env);
 	return (rv);
 }

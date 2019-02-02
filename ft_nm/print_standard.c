@@ -52,10 +52,10 @@ static char			get_section_letter64(t_env *env, int64_t sect_num, char letter)
 		{
 			segcmd = (struct segment_command_64*)ldcmd;
 			if (0 > (sect_num - segcmd->nsects))
-				return (get_section(ft_incbyte(segcmd, sizeof(struct segment_command_64)), sect_num, 64));
+				return (get_section(incbytes(env, segcmd, sizeof(struct segment_command_64)), sect_num, 64));
 			sect_num -= segcmd->nsects;
 		}
-		ldcmd = ft_incbyte(ldcmd, rev_bytes(env, ldcmd->cmdsize));
+		ldcmd = incbytes_rev(env, ldcmd, ldcmd->cmdsize);
 	}
 	return (letter);
 }
@@ -74,10 +74,10 @@ static char			get_section_letter(t_env *env, int64_t sect_num, char letter)
 		{
 			segcmd = (struct segment_command*)ldcmd;
 			if (0 > (sect_num - segcmd->nsects))
-				return (get_section(ft_incbyte(segcmd, sizeof(struct segment_command)), sect_num, 0));
+				return (get_section(incbytes(env, segcmd, sizeof(struct segment_command)), sect_num, 0));
 			sect_num -= segcmd->nsects;
 		}
-		ldcmd = ft_incbyte(ldcmd, rev_bytes(env, ldcmd->cmdsize));
+		ldcmd = incbytes_rev(env, ldcmd, ldcmd->cmdsize);
 	}
 	return (letter);
 }

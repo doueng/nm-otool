@@ -25,10 +25,12 @@ static struct section_64	*get_text_section64(t_env *env)
 	while (--ncmds && !text_section)
 	{
 		segcmd = (struct segment_command_64*)ldcmd;
-		if (rev_bytes(env, ldcmd->cmd) == LC_SEGMENT_64)
-			if (ft_strequ(segcmd->segname, "__TEXT"))
-				text_section = (struct section_64*)(++segcmd);
-		ldcmd = ft_incbyte(ldcmd, rev_bytes(env, ldcmd->cmdsize));
+		if (rev_bytes(env, ldcmd->cmd) == LC_SEGMENT_64 && segcmd->filesize > 0)
+		{
+			text_section = (struct section_64*)(++segcmd);
+			return (text_section);
+		}
+		ldcmd = incbytes_rev(env, ldcmd, ldcmd->cmdsize);
 	}
 	return (text_section);
 }
@@ -47,10 +49,12 @@ static struct section	*get_text_section(t_env *env)
 	while (--ncmds && !text_section)
 	{
 		segcmd = (struct segment_command*)ldcmd;
-		if (rev_bytes(env, ldcmd->cmd) == LC_SEGMENT)
-			if (ft_strequ(segcmd->segname, "__TEXT"))
-				text_section = (struct section*)(++segcmd);
-		ldcmd = ft_incbyte(ldcmd, rev_bytes(env, ldcmd->cmdsize));
+		if (rev_bytes(env, ldcmd->cmd) == LC_SEGMENT && segcmd->filesize > 0)
+		{
+			text_section = (struct section*)(++segcmd);
+			return (text_section);
+		}
+		ldcmd = incbytes_rev(env, ldcmd, ldcmd->cmdsize);
 	}
 	return (text_section);
 }

@@ -29,10 +29,10 @@ int			main(int argc, char *argv[])
 {
 	int options;
 
-	if (argc < 2)
-		return (-1);
-	if ((options = get_options(*++argv)))
+	if (argc > 1 && (options = get_options(*++argv)))
 		argv++;
+	if (argc < 2)
+		return (process_file("a.out", options));
 	while (*argv)
 	{
 		if ((argc - (options ? 1 : 0)) > 2)

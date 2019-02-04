@@ -24,6 +24,7 @@ static void		print_msg(int error, char *file, int line)
 	msg = (error == CLOSE_FAILED) ? "close failed" : msg;
 	msg = (error == MMAP_FAILED) ? "mmap failed" : msg;
 	msg = (error == NO_SYMTAB) ? "no symtab" : msg;
+	msg = (error == INVALID_ARG) ? "Invalid arg" : msg;
 	msg = (error == MALLOC_FAILED) ? "malloc failed" : msg;
 	ft_putstr_fd("ERROR:\t", 2);
 	ft_putendl_fd(msg, 2);

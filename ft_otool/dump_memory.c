@@ -19,7 +19,7 @@ static void	dump64(t_env *env, struct section_64 *text_section)
 	int64_t		mem_size;
 	uint8_t		*mem;
 
-	mem = env->bin.head;
+	mem = (uint8_t*)env->macho;
 	pos = rev_bytes(env, text_section->addr);
 	mem += rev_bytes(env, text_section->offset);
 	mem_size = rev_bytes(env, text_section->size);
@@ -41,7 +41,7 @@ static void	dump32(t_env *env, struct section *text_section)
 	int32_t		mem_size;
 	uint8_t		*mem;
 
-	mem = env->bin.head;
+	mem = (uint8_t*)env->macho;
 	pos = rev_bytes(env, text_section->addr);
 	mem += rev_bytes(env, text_section->offset);
 	mem_size = rev_bytes(env, text_section->size);
@@ -62,7 +62,7 @@ static void	dump32(t_env *env, struct section *text_section)
 int			dump_memory(t_env *env, void *text_section)
 {
 	if (!text_section)
-		return (-1);
+		return (ft_error_one(INVALID_FILE, __FILE__, __LINE__));
 	if (env->is_64)
 		dump64(env, text_section);
 	else

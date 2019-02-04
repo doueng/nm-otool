@@ -24,7 +24,7 @@
 int			main(int argc, char *argv[])
 {
 	if (argc < 2)
-		return (-1);
+		return (ft_error_one(INVALID_ARG, __FILE__, __LINE__));
 	/* if (!(options = get_options(*++argv))) */
 		/* return (-1); */
 	while (*++argv)

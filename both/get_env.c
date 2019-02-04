@@ -63,6 +63,7 @@ t_env				*get_env(char *filename)
 	if (!(get_fileinfo(env, filename)))
 		return (NULL);
 	env->macho = env->filehead;
-	update_env(env);
+	if (!update_env(env))
+		return (NULL);
 	return (env);
 }

@@ -30,7 +30,8 @@ static struct section_64	*get_text_section64(t_env *env)
 			text_section = (struct section_64*)(++segcmd);
 			return (text_section);
 		}
-		ldcmd = incbytes_rev(env, ldcmd, ldcmd->cmdsize);
+		if (!(ldcmd = incbytes_rev(env, ldcmd, ldcmd->cmdsize)))
+			return (NULL);
 	}
 	return (text_section);
 }
@@ -54,7 +55,8 @@ static struct section	*get_text_section(t_env *env)
 			text_section = (struct section*)(++segcmd);
 			return (text_section);
 		}
-		ldcmd = incbytes_rev(env, ldcmd, ldcmd->cmdsize);
+		if (!(ldcmd = incbytes_rev(env, ldcmd, ldcmd->cmdsize)))
+			return (NULL);
 	}
 	return (text_section);
 }

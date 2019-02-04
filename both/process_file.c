@@ -33,7 +33,7 @@ static int	processor(t_env *env, char *filename, int options)
 	uint32_t			header;
 
 	header = *((uint32_t*)(env->filehead));
-	if (ft_strequ((void*)&header, ARMAG))
+	if (ft_memcmp(env->filehead, ARMAG, SARMAG) == 0)
 		return (process_archive(env, filename, options));
 	else if (header == FAT_MAGIC_64 || header == FAT_CIGAM)
 		return (process_fat(env, options));

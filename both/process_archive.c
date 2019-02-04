@@ -40,9 +40,10 @@ int				process_archive(t_env *env, char *archive_name, int options)
 	char					*filename;
 	uint8_t					*bin;
 
-	bin = env->bin.head;
-	bin += ft_strlen(ARMAG);
+	bin = env->filehead;
+	bin = incbytes(env, bin, SARMAG);
 	num_ranlib = get_num_ranlibs(bin);
+	ft_printf("%d\n", num_ranlib);
 	bin += ft_atoi((((struct ar_hdr*)bin)->ar_size));
 	bin += sizeof(struct ar_hdr);
 	while (*bin == '\n')
@@ -55,7 +56,7 @@ int				process_archive(t_env *env, char *archive_name, int options)
 			return (-1);
 		ft_printf("\n%s(%s):\n", archive_name, filename);
 		free(filename);
-		env->bin.head = move_past_ar_hdr(bin);
+		env->filehead = move_past_ar_hdr(bin);
 		if (-1 == process_macho(env, options))
 			return (-1);
 		bin += ft_atoi((((struct ar_hdr*)bin)->ar_size));

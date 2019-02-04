@@ -42,12 +42,16 @@ t_env				*update_env(t_env *env)
 	magic = env->macho->magic;
 	env->is_64 = is_64(magic);
 	env->rev_bytes = is_rev_bytes(magic);
-	env->ldcmds = incbytes(env, env->macho,
+	env->ldcmds = incbytes(env,
+						   env->macho,
 						   env->is_64
 						   ? sizeof(struct mach_header_64)
 						   : sizeof(struct mach_header));
+	if (!env->ldcmds)
+		return (ft_error(CORRUPT_FILE, __FILE__, __LINE__));
 	if (env->is_64 == 0
 		&& env->rev_bytes == 0
+		&& ft_memcmp(env->macho, ARMAG, SARMAG) != 0
 		&& magic != MH_MAGIC
 		&& magic != FAT_MAGIC)
 		return (ft_error(INVALID_FILE, __FILE__, __LINE__));

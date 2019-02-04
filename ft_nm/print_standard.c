@@ -51,7 +51,7 @@ static char			get_section_letter64(t_env *env, int64_t sect_num, char letter)
 		if (rev_bytes(env, ldcmd->cmd) == LC_SEGMENT_64)
 		{
 			segcmd = (struct segment_command_64*)ldcmd;
-			if (0 > (sect_num - segcmd->nsects))
+			if (0 >= (sect_num - segcmd->nsects))
 				return (get_section(incbytes(env, segcmd, sizeof(struct segment_command_64)), sect_num, 64));
 			sect_num -= segcmd->nsects;
 		}
@@ -73,7 +73,7 @@ static char			get_section_letter(t_env *env, int64_t sect_num, char letter)
 		if (rev_bytes(env, ldcmd->cmd) == LC_SEGMENT)
 		{
 			segcmd = (struct segment_command*)ldcmd;
-			if (0 > (sect_num - segcmd->nsects))
+			if (0 >= (sect_num - segcmd->nsects))
 				return (get_section(incbytes(env, segcmd, sizeof(struct segment_command)), sect_num, 0));
 			sect_num -= segcmd->nsects;
 		}
@@ -93,39 +93,43 @@ static char			get_type_letter(t_nmtree *symbol)
 	type = nlist->n_type & N_TYPE;
 	nsect = nlist->n_sect;
 	letter = 'S';
-	letter = type == N_UNDF ? 'U' : letter;
-	letter = type == N_ABS ? 'A' : letter;
-	letter = type == N_INDR ? 'I' : letter;
 	if (symbol->env->is_64)
 		letter = get_section_letter64(symbol->env, nsect, letter);
 	else
 		letter = get_section_letter(symbol->env, nsect, letter);
 	if (type == N_UNDF  && nlist->n_type & N_EXT)
 		letter = 'C';
+	letter = type == N_UNDF ? 'U' : letter;
+	letter = type == N_ABS ? 'A' : letter;
+	letter = type == N_INDR ? 'I' : letter;
 	return (nlist->n_type & N_EXT ? letter : letter | 0x20);
 }
 
-void				print_standard(t_nmtree *symbol)
+void			print_standard(t_nmtree *symbol)
 {
 	struct nlist_64	*nlist;
 	t_env			*env;
+	char			type_letter;
 
 	env = symbol->env;
 	nlist = symbol->nlist;
+	type_letter = get_type_letter(symbol);
 	if (symbol->env->is_64)
 	{
-		if (nlist->n_value == 0 && nlist->n_type == N_EXT)
-			ft_printf("%16c U %s\n", ' ', symbol->name);
-		else
-			ft_printf("%016llx %c %s\n", rev_bytes(env, nlist->n_value), get_type_letter(symbol),
-						symbol->name);
+		nlist->n_value == 0 && nlist->n_type == N_EXT
+			? ft_printf("%16c U %s\n", ' ', symbol->name)
+			: ft_printf("%016llx %c %s\n",
+					  rev_bytes(env, nlist->n_value),
+					  type_letter,
+					  symbol->name);
 	}
 	else
 	{
-		if ((uint32_t)nlist->n_value == 0 && nlist->n_type == N_EXT)
-			ft_printf("%8c U %s\n", ' ', symbol->name);
-		else
-			ft_printf("%08x %c %s\n", rev_bytes(env, nlist->n_value), get_type_letter(symbol),
-						symbol->name);
+		(uint32_t)nlist->n_value == 0 && nlist->n_type == N_EXT
+			? ft_printf("%8c U %s\n", ' ', symbol->name)
+			: ft_printf("%08x %c %s\n",
+					  rev_bytes(env, nlist->n_value),
+					  type_letter,
+					  symbol->name);
 	}
 }

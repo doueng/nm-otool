@@ -23,7 +23,7 @@ static void	dump64(t_env *env, struct section_64 *text_section)
 	pos = rev_bytes(env, text_section->addr);
 	mem += rev_bytes(env, text_section->offset);
 	mem_size = rev_bytes(env, text_section->size);
-	while (mem_size >= 0)
+	while (mem_size > 0)
 	{
 		ft_printf("%016llx\t", pos);
 		i = 0;
@@ -45,7 +45,7 @@ static void	dump32(t_env *env, struct section *text_section)
 	pos = rev_bytes(env, text_section->addr);
 	mem += rev_bytes(env, text_section->offset);
 	mem_size = rev_bytes(env, text_section->size);
-	while (mem_size >= 0)
+	while (mem_size > 0)
 	{
 		ft_printf("%08x\t", pos);
 		i = 0;

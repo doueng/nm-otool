@@ -23,14 +23,16 @@
 
 int			main(int argc, char *argv[])
 {
+	int rv;
+
 	if (argc < 2)
 		return (ft_error_one(INVALID_ARG, __FILE__, __LINE__));
 	/* if (!(options = get_options(*++argv))) */
 		/* return (-1); */
+	rv = 0;
 	while (*++argv)
 	{
-		if (-1 == process_file(*argv, 0))
-			return (-1);
+		rv = process_file(*argv, 0);
 	}
-	return (0);
+	return (rv);
 }

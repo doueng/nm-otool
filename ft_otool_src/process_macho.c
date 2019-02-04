@@ -28,6 +28,8 @@ static struct section_64	*get_text_section64(t_env *env)
 		if (rev_bytes(env, ldcmd->cmd) == LC_SEGMENT_64 && segcmd->filesize > 0)
 		{
 			text_section = (struct section_64*)(++segcmd);
+			if (text_section->size <= 0 || ft_strcmp(text_section->sectname, "__text"))
+				return (ft_error(INVALID_FILE, __FILE__, __LINE__));
 			return (text_section);
 		}
 		if (!(ldcmd = incbytes_rev(env, ldcmd, ldcmd->cmdsize)))
@@ -53,6 +55,8 @@ static struct section	*get_text_section(t_env *env)
 		if (rev_bytes(env, ldcmd->cmd) == LC_SEGMENT && segcmd->filesize > 0)
 		{
 			text_section = (struct section*)(++segcmd);
+			if (text_section->size <= 0 || ft_strcmp(text_section->sectname, "__text"))
+				return (ft_error(INVALID_FILE, __FILE__, __LINE__));
 			return (text_section);
 		}
 		if (!(ldcmd = incbytes_rev(env, ldcmd, ldcmd->cmdsize)))

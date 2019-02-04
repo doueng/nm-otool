@@ -1,0 +1,5 @@
+getters.c:20:	ldcmds = env->ldcmds;
+getters.c:21:	ncmds = env->macho->ncmds;
+process_macho.c:21:/* 	ldcmds = env->ldcmds; */
+process_macho.c:22:/* 	ncmds = env->macho->ncmds; */
+process_macho.c:54:	/* btinfo->sections = env->sections; */

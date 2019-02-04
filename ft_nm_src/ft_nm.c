@@ -32,13 +32,12 @@ int			main(int argc, char *argv[])
 	if (argc > 1 && (options = get_options(*++argv)))
 		argv++;
 	if (argc < 2)
-		return (process_file("a.out", options));
+		process_file("a.out", options);
 	while (*argv)
 	{
 		if ((argc - (options ? 1 : 0)) > 2)
 			ft_printf("\n%s:\n", *argv);
-		if (-1 == process_file(*argv, options))
-			return (-1);
+		process_file(*argv, options);
 		argv++;
 	}
 	return (0);

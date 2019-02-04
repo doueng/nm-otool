@@ -29,9 +29,10 @@ static int		process_all_archs(t_env *env,
 	{
 		if (-1 == (process_arch(env, fat_env, arch, options)))
 			return (-1);
-		arch = incbytes(fat_env, arch, fat_env->is_64
+		if (!(arch = incbytes(fat_env, arch, fat_env->is_64
 			? sizeof(struct fat_arch_64)
-			: sizeof(struct fat_arch));
+			: sizeof(struct fat_arch))))
+		return (ft_error_one(INVALID_FILE, __FILE__, __LINE__));
 	}
 	return (0);
 }
@@ -48,9 +49,10 @@ static int		process_arch_X86_64(t_env *env,
 	{
 		if (rev_bytes(fat_env, arch->cputype) == CPU_TYPE_X86_64)
 			return (process_arch(env, fat_env, arch, options));
-		arch = incbytes(fat_env, arch, fat_env->is_64
+		if (!(arch = incbytes(fat_env, arch, fat_env->is_64
 			? sizeof(struct fat_arch_64)
-			: sizeof(struct fat_arch));
+			: sizeof(struct fat_arch))))
+		return (ft_error_one(INVALID_FILE, __FILE__, __LINE__));
 	}
 	return (1);
 }

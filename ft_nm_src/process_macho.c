@@ -29,6 +29,8 @@ int				process_macho(t_env *env, int options)
 
 	if (!(symtab = (struct symtab_command*)get_ldcmd(env, LC_SYMTAB)))
 		return (ft_error_one(NO_SYMTAB, __FILE__, __LINE__));
+	if (!(incbytes_rev(env, incbytes_rev(env, env->macho, symtab->strsize + 1), symtab->stroff)))
+		return (ft_error_one(INVALID_FILE, __FILE__, __LINE__));
 	if (!(btinfo = (t_btinfo*)get_btinfo(env, symtab)))
 		return (-1);
 	if (!(nmtree = (t_nmtree*)insert_symbols(env, btinfo, options)))

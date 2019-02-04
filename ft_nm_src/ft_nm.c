@@ -28,6 +28,7 @@ static int	get_options(char *op_str)
 int			main(int argc, char *argv[])
 {
 	int options;
+	int rv;
 
 	if (argc > 1 && (options = get_options(*++argv)))
 		argv++;
@@ -37,8 +38,8 @@ int			main(int argc, char *argv[])
 	{
 		if ((argc - (options ? 1 : 0)) > 2)
 			ft_printf("\n%s:\n", *argv);
-		process_file(*argv, options);
+		rv = process_file(*argv, options);
 		argv++;
 	}
-	return (0);
+	return (rv);
 }

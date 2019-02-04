@@ -66,7 +66,8 @@ t_nmtree			*insert_symbols(t_env *env, t_btinfo *btinfo, int options)
 	{
 		if ((nlist->n_type & N_STAB) == 0)
 		{
-			name = &(btinfo->symtabstr[rev_bytes(env, nlist->n_un.n_strx)]);
+			if (!(name = incbytes_rev(env, btinfo->symtabstr, nlist->n_un.n_strx)))
+				return (ft_error(INVALID_FILE, __FILE__, __LINE__));
 			if (!(new = create_nm_tree_node(env, nlist, name)))
 				return (NULL);
 			nmtree_insert(&symbols_root, new,

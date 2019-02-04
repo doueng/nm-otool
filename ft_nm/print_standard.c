@@ -24,59 +24,38 @@ static char			sectname_to_char(char *sectname)
 		return ('S');
 }
 
-static char			get_section(void *first_section, int64_t sect_num, int is_64)
+static char			get_section(t_env *env, struct load_command *ldcmd, int64_t sect_index)
 {
-	struct section_64	*sections_64;
-	struct section		*sections;
 	char				*sectname;
+	size_t				sectsize;
+	size_t				segcmd_size;
 
-	if (is_64)
-		sections_64 = (struct section_64*)first_section + sect_num - 1;
-	else
-		sections = (struct section*)first_section + sect_num - 1;
-	sectname = is_64 ? sections_64->sectname : sections->sectname;
+	segcmd_size = env->is_64
+		? sizeof(struct segment_command_64)
+		: sizeof(struct segment_command);
+	sect_index--;
+	sectsize = env->is_64 ? sizeof(struct section_64) : sizeof(struct section);
+	sectname = (char*)incbytes(env, ldcmd, segcmd_size) + sect_index * sectsize;
 	return (sectname_to_char(sectname));
 }
 
-static char			get_section_letter64(t_env *env, int64_t sect_num, char letter)
-{
-	struct load_command			*ldcmd;
-	struct segment_command_64	*segcmd;
-	uint32_t					ncmds;
-
-	ldcmd = env->ldcmds;
-	ncmds = rev_bytes(env, env->macho->ncmds);
-	while (ncmds-- && sect_num > 0)
-	{
-		if (rev_bytes(env, ldcmd->cmd) == LC_SEGMENT_64)
-		{
-			segcmd = (struct segment_command_64*)ldcmd;
-			if (0 >= (sect_num - segcmd->nsects))
-				return (get_section(incbytes(env, segcmd, sizeof(struct segment_command_64)), sect_num, 64));
-			sect_num -= segcmd->nsects;
-		}
-		ldcmd = incbytes_rev(env, ldcmd, ldcmd->cmdsize);
-	}
-	return (letter);
-}
-
-static char			get_section_letter(t_env *env, int64_t sect_num, char letter)
+static char			get_section_letter(t_env *env, int64_t sect_index, char letter)
 {
 	struct load_command		*ldcmd;
-	struct segment_command	*segcmd;
-	uint32_t				ncmds;
+	int64_t					nsects;
 
+	if (sect_index <= 0)
+		return (letter);
 	ldcmd = env->ldcmds;
-	ncmds = rev_bytes(env, env->macho->ncmds);
-	while (ncmds-- && sect_num > 0)
+	while (rev_bytes(env, ldcmd->cmd) == LC_SEGMENT
+			|| rev_bytes(env, ldcmd->cmd) == LC_SEGMENT_64)
 	{
-		if (rev_bytes(env, ldcmd->cmd) == LC_SEGMENT)
-		{
-			segcmd = (struct segment_command*)ldcmd;
-			if (0 >= (sect_num - segcmd->nsects))
-				return (get_section(incbytes(env, segcmd, sizeof(struct segment_command)), sect_num, 0));
-			sect_num -= segcmd->nsects;
-		}
+		nsects = env->is_64
+			? rev_bytes(env, ((struct segment_command_64*)ldcmd)->nsects)
+			: rev_bytes(env, ((struct segment_command*)ldcmd)->nsects);
+		if (sect_index <= nsects)
+			return (get_section(env, ldcmd, sect_index));
+		sect_index -= nsects;
 		ldcmd = incbytes_rev(env, ldcmd, ldcmd->cmdsize);
 	}
 	return (letter);
@@ -86,17 +65,12 @@ static char			get_type_letter(t_nmtree *symbol)
 {
 	char			letter;
 	uint8_t			type;
-	uint8_t			nsect;
 	struct nlist_64	*nlist;
 
 	nlist = symbol->nlist;
 	type = nlist->n_type & N_TYPE;
-	nsect = nlist->n_sect;
 	letter = 'S';
-	if (symbol->env->is_64)
-		letter = get_section_letter64(symbol->env, nsect, letter);
-	else
-		letter = get_section_letter(symbol->env, nsect, letter);
+	letter = get_section_letter(symbol->env, nlist->n_sect, letter);
 	if (type == N_UNDF  && nlist->n_type & N_EXT)
 		letter = 'C';
 	letter = type == N_UNDF ? 'U' : letter;

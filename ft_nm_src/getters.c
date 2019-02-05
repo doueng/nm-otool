@@ -12,22 +12,6 @@
 
 #include "ft_nm.h"
 
-struct load_command	*get_ldcmd(t_env *env, uint32_t cmd)
-{
-	struct load_command *ldcmds;
-	uint32_t			ncmds;
-
-	ldcmds = env->ldcmds;
-	ncmds = rev_bytes(env, env->macho->ncmds);
-	while (ncmds--)
-	{
-		if (rev_bytes(env, ldcmds->cmd) == cmd)
-			return (ldcmds);
-		if (!(ldcmds = incbytes_rev(env, ldcmds, ldcmds->cmdsize)))
-			return (NULL);
-	}
-	return (NULL);
-}
 
 t_btinfo			*get_btinfo(t_env *env, struct symtab_command *symtab)
 {

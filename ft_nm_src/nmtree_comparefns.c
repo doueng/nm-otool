@@ -14,13 +14,21 @@
 
 int		alpha_order_compare(t_nmtree *new, t_nmtree *to_compare, int options)
 {
-	int strcmp;
-	int rev;
+	int		strcmp;
+	int		rev;
+	int64_t	x;
+	int64_t	y;
 
 	rev = options & REV_OP ? -1 : 1;
-	if (0 != (strcmp = ft_strcmp(to_compare->name, new->name))) // change back to strcmp
+	if (0 != (strcmp = ft_strcmp(to_compare->name, new->name)))
 		return (rev * strcmp);
-	return (rev * (to_compare->nlist->n_value - new->nlist->n_value));
+	x = new->env->is_64
+		? to_compare->nlist->n_value
+		: (int32_t)to_compare->nlist->n_value;
+	y = new->env->is_64
+		? new->nlist->n_value
+		: (int32_t)new->nlist->n_value;
+	return (rev * (rev_bytes(new->env, x) - rev_bytes(new->env, y)));
 }
 
 int		num_order_compare(t_nmtree *new, t_nmtree *to_compare, int options)

@@ -22,19 +22,21 @@ static int		process_all_archs(t_env *env,
 								  uint32_t num_archs,
 								  int options)
 {
-	void *arch;
+	void	*arch;
+	int		rv;
 
+	rv = 0;
 	arch = incbytes(fat_env, env->filehead, sizeof(struct fat_header));
 	while (num_archs--)
 	{
-		if (-1 == (process_arch(env, fat_env, arch, options)))
-			return (-1);
+		if (!process_arch(env, fat_env, arch, options))
+			rv = -1;
 		if (!(arch = incbytes(fat_env, arch, fat_env->is_64
 			? sizeof(struct fat_arch_64)
 			: sizeof(struct fat_arch))))
 		return (ft_error_one(INVALID_FILE, __FILE__, __LINE__));
 	}
-	return (0);
+	return (rv);
 }
 
 static int		process_arch_X86_64(t_env *env,

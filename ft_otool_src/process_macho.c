@@ -67,7 +67,11 @@ static struct section	*get_text_section(t_env *env)
 
 int							process_macho(t_env *env, int options)
 {
+	struct symtab_command	*symtab;
+
 	(void)&options; // fix
+	if (!(symtab = checksymtab(env)))
+		return (-1);
 	ft_printf("%s:\n", env->filename);
 	ft_printf("Contents of (__TEXT,__text) section\n");
 	if (env->is_64)

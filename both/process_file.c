@@ -37,7 +37,10 @@ static int	processor(t_env *env, char *filename, int options)
 		return (process_archive(env, filename, options));
 	else if (header == FAT_MAGIC_64 || header == FAT_CIGAM)
 		return (process_fat(env, options));
-	else if (header == MH_MAGIC_64 || header == MH_MAGIC)
+	else if (header == MH_MAGIC_64
+			 || header == MH_MAGIC
+			 || header == MH_CIGAM
+			 || header == MH_CIGAM_64)
 		return (process_macho(env, options));
 	return (ft_error_one(INVALID_FILE, __FILE__, __LINE__));
 }

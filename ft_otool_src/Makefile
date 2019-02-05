@@ -3,7 +3,6 @@ OTOOL = ft_otool
 LIBFT = ../libft
 LIB = ../libft/libft.a
 
-#FLAGS =
 FLAGS = -Werror -Wextra -Wall -g
 
 SRC_OTOOL = $(wildcard *.c ../both/*.c)
@@ -27,7 +26,7 @@ clean:
 	@/bin/rm -f compile_commands.json
 	@make -C $(LIBFT) clean
 
-fclean:
+fclean: clean
 	@/bin/rm -f $(OTOOL)
 	@make -C $(LIBFT) fclean
 

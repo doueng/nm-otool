@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_env.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dengstra <dengstra@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/02/05 18:05:55 by dengstra          #+#    #+#             */
+/*   Updated: 2019/02/05 18:10:58 by dengstra         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "nm_otool.h"
 
 static t_env		*get_fileinfo(t_env *env, char *filename)
@@ -43,10 +55,10 @@ t_env				*update_env(t_env *env)
 	env->is_64 = is_64(magic);
 	env->rev_bytes = is_rev_bytes(magic);
 	env->ldcmds = incbytes(env,
-						   env->macho,
-						   env->is_64
-						   ? sizeof(struct mach_header_64)
-						   : sizeof(struct mach_header));
+						env->macho,
+						env->is_64
+							? sizeof(struct mach_header_64)
+							: sizeof(struct mach_header));
 	if (!env->ldcmds)
 		return (ft_error(CORRUPT_FILE, __FILE__, __LINE__));
 	if (env->is_64 == 0

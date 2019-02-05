@@ -6,7 +6,7 @@
 /*   By: dengstra <dengstra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/27 16:07:48 by dengstra          #+#    #+#             */
-/*   Updated: 2019/01/27 16:16:01 by dengstra         ###   ########.fr       */
+/*   Updated: 2019/02/05 18:10:00 by dengstra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	invalid_file(char *filename)
 		return (ft_error_one(OPEN_FAILED, __FILE__, __LINE__));
 	if (-1 == fstat(fd, &st))
 		return (ft_error_one(FSTAT_FAILED, __FILE__, __LINE__));
-	if (st.st_size < 100) // check
+	if (st.st_size < 10)
 		return (ft_error_one(CORRUPT_FILE, __FILE__, __LINE__));
 	if (st.st_mode & S_IFDIR)
 		return (ft_error_one(INVALID_FILE, __FILE__, __LINE__));
@@ -38,9 +38,9 @@ static int	processor(t_env *env, char *filename, int options)
 	else if (header == FAT_MAGIC_64 || header == FAT_CIGAM)
 		return (process_fat(env, options));
 	else if (header == MH_MAGIC_64
-			 || header == MH_MAGIC
-			 || header == MH_CIGAM
-			 || header == MH_CIGAM_64)
+			|| header == MH_MAGIC
+			|| header == MH_CIGAM
+			|| header == MH_CIGAM_64)
 		return (process_macho(env, options));
 	return (ft_error_one(INVALID_FILE, __FILE__, __LINE__));
 }

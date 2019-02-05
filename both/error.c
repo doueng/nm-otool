@@ -6,7 +6,7 @@
 /*   By: dengstra <dengstra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/27 16:04:31 by dengstra          #+#    #+#             */
-/*   Updated: 2019/01/27 16:07:30 by dengstra         ###   ########.fr       */
+/*   Updated: 2019/02/05 18:09:06 by dengstra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ static void		print_msg(int error, char *file, int line)
 	msg = (error == INVALID_ARG) ? "Invalid arg" : msg;
 	msg = (error == MALLOC_FAILED) ? "malloc failed" : msg;
 	ft_putstr_fd("ERROR:\t", 2);
-	/* (void)file; */
-	/* (void)line; */
 	ft_putendl_fd(msg, 2);
 	ft_putstr_fd("FILE:\t", 2);
 	ft_putendl_fd(file, 2);

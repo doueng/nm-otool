@@ -6,7 +6,7 @@
 /*   By: dengstra <dengstra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/27 16:13:02 by dengstra          #+#    #+#             */
-/*   Updated: 2019/01/27 16:49:46 by dengstra         ###   ########.fr       */
+/*   Updated: 2019/02/05 18:31:37 by dengstra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static char			sectname_to_char(char *sectname)
 		return ('S');
 }
 
-static char			get_section(t_env *env, struct load_command *ldcmd, int64_t sect_index)
+static char			get_section(t_env *env, struct load_command *ldcmd,
+								int64_t sect_index)
 {
 	char				*sectname;
 	size_t				sectsize;
@@ -39,7 +40,8 @@ static char			get_section(t_env *env, struct load_command *ldcmd, int64_t sect_i
 	return (sectname_to_char(sectname));
 }
 
-static char			get_section_letter(t_env *env, int64_t sect_index, char letter)
+static char			get_section_letter(t_env *env, int64_t sect_index,
+								char letter)
 {
 	struct load_command		*ldcmd;
 	int64_t					nsects;
@@ -93,17 +95,17 @@ void			print_standard(t_nmtree *symbol)
 		nlist->n_value == 0 && nlist->n_type == N_EXT
 			? ft_printf("%16c U %s\n", ' ', symbol->name)
 			: ft_printf("%016llx %c %s\n",
-					  rev_bytes(env, nlist->n_value),
-					  type_letter,
-					  symbol->name);
+					rev_bytes(env, nlist->n_value),
+					type_letter,
+					symbol->name);
 	}
 	else
 	{
 		(uint32_t)nlist->n_value == 0 && nlist->n_type == N_EXT
 			? ft_printf("%8c U %s\n", ' ', symbol->name)
 			: ft_printf("%08x %c %s\n",
-					  rev_bytes(env, nlist->n_value),
-					  type_letter,
-					  symbol->name);
+					rev_bytes(env, nlist->n_value),
+					type_letter,
+					symbol->name);
 	}
 }

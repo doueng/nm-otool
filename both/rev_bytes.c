@@ -1,5 +1,16 @@
-#include "nm_otool.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rev_bytes.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dengstra <dengstra@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/02/05 18:07:13 by dengstra          #+#    #+#             */
+/*   Updated: 2019/02/05 18:11:20 by dengstra         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "nm_otool.h"
 
 uint32_t			rev_bytes32(uint32_t bytes)
 {
@@ -26,4 +37,3 @@ uint64_t			rev_bytes(t_env *env, uint64_t bytes)
 		return (rev_bytes64(bytes));
 	return (bytes);
 }
-

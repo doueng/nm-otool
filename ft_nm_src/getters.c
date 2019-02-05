@@ -6,12 +6,11 @@
 /*   By: dengstra <dengstra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/27 16:06:42 by dengstra          #+#    #+#             */
-/*   Updated: 2019/01/27 19:13:27 by dengstra         ###   ########.fr       */
+/*   Updated: 2019/02/05 18:24:25 by dengstra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
-
 
 t_btinfo			*get_btinfo(t_env *env, struct symtab_command *symtab)
 {

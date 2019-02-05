@@ -6,13 +6,15 @@
 /*   By: dengstra <dengstra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/27 16:07:42 by dengstra          #+#    #+#             */
-/*   Updated: 2019/01/27 16:16:30 by dengstra         ###   ########.fr       */
+/*   Updated: 2019/02/05 18:26:39 by dengstra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-static t_nmtree		*create_nm_tree_node(t_env *env, struct nlist_64 *nlist, char *name)
+static t_nmtree		*create_nm_tree_node(t_env *env,
+											struct nlist_64 *nlist,
+											char *name)
 {
 	t_nmtree *new;
 
@@ -66,7 +68,8 @@ t_nmtree			*insert_symbols(t_env *env, t_btinfo *btinfo, int options)
 	{
 		if ((nlist->n_type & N_STAB) == 0)
 		{
-			if (!(name = incbytes_rev(env, btinfo->symtabstr, nlist->n_un.n_strx)))
+			if (!(name = incbytes_rev(env, btinfo->symtabstr,
+													nlist->n_un.n_strx)))
 				return (ft_error(INVALID_FILE, __FILE__, __LINE__));
 			if (!*name)
 				return (ft_error(INVALID_FILE, __FILE__, __LINE__));
@@ -75,9 +78,9 @@ t_nmtree			*insert_symbols(t_env *env, t_btinfo *btinfo, int options)
 			nmtree_insert(&symbols_root, new,
 							options, get_insert_function(options));
 		}
-		if (!(nlist = incbytes(env, nlist, env->is_64 ? sizeof(*nlist) : sizeof(struct nlist))))
+		if (!(nlist = incbytes(env, nlist,
+						env->is_64 ? sizeof(*nlist) : sizeof(struct nlist))))
 			return (ft_error(CORRUPT_FILE, __FILE__, __LINE__));
-
 	}
 	return (symbols_root);
 }

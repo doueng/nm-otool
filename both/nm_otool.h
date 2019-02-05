@@ -49,6 +49,8 @@ typedef struct					s_env
 	void						*filehead;
 }								t_env;
 
+uint32_t						rev_bytes32(uint32_t bytes);
+uint64_t						rev_bytes64(uint64_t bytes);
 struct symtab_command			*checksymtab(t_env *env);
 t_env							*update_env(t_env *env);
 void							*ft_error(int error, char *file, int line);

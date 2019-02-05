@@ -1,7 +1,7 @@
 #include "nm_otool.h"
 
 
-static uint32_t		rev_bytes32(uint32_t bytes)
+uint32_t			rev_bytes32(uint32_t bytes)
 {
 	return ((bytes << 24)
 	| ((bytes << 8) & 0x00ff0000)

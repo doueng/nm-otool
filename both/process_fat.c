@@ -29,7 +29,7 @@ static int		process_all_archs(t_env *env,
 	arch = incbytes(fat_env, env->filehead, sizeof(struct fat_header));
 	while (num_archs--)
 	{
-		if (!process_arch(env, fat_env, arch, options))
+		if (-1 == process_arch(env, fat_env, arch, options))
 			rv = -1;
 		if (!(arch = incbytes(fat_env, arch, fat_env->is_64
 			? sizeof(struct fat_arch_64)

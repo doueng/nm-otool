@@ -68,6 +68,8 @@ t_nmtree			*insert_symbols(t_env *env, t_btinfo *btinfo, int options)
 		{
 			if (!(name = incbytes_rev(env, btinfo->symtabstr, nlist->n_un.n_strx)))
 				return (ft_error(INVALID_FILE, __FILE__, __LINE__));
+			if (!*name)
+				return (ft_error(INVALID_FILE, __FILE__, __LINE__));
 			if (!(new = create_nm_tree_node(env, nlist, name)))
 				return (NULL);
 			nmtree_insert(&symbols_root, new,
@@ -75,6 +77,7 @@ t_nmtree			*insert_symbols(t_env *env, t_btinfo *btinfo, int options)
 		}
 		if (!(nlist = incbytes(env, nlist, env->is_64 ? sizeof(*nlist) : sizeof(struct nlist))))
 			return (ft_error(CORRUPT_FILE, __FILE__, __LINE__));
+
 	}
 	return (symbols_root);
 }

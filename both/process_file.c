@@ -52,11 +52,11 @@ int			process_file(char *filename, int options)
 
 	rv = 0;
 	if (-1 == invalid_file(filename))
-		return (-1);
+		return (ft_error_one(CLOSE_FAILED, __FILE__, __LINE__));
 	if (!(env = get_env(filename)))
 		return (-1);
 	if (-1 == processor(env, filename, options))
-		rv = -1;
+		rv = ft_error_one(INVALID_FILE, __FILE__, __LINE__);
 	free(env);
 	return (rv);
 }

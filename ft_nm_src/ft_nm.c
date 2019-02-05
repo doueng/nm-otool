@@ -16,9 +16,10 @@ static int	get_options(char *op_str)
 {
 	int options;
 
-	if (op_str[0] != '-')
-		return (0);
 	options = 0;
+	options |= NM_OP;
+	if (op_str[0] != '-')
+		return (options);
 	options |= ft_strchr(op_str, 'r') ? REV_OP : 0;
 	options |= ft_strchr(op_str, 'n') ? NUM_OP : 0;
 	options |= ft_strchr(op_str, 'p') ? P_OP : 0;
@@ -30,14 +31,14 @@ int			main(int argc, char *argv[])
 	int options;
 	int rv;
 
-	if (argc > 1 && (options = get_options(*++argv)))
+	if (argc > 1 && 1 < (options = get_options(*++argv)))
 		argv++;
 	if (argc < 2)
 		process_file("a.out", options);
 	while (*argv)
 	{
-		if ((argc - (options ? 1 : 0)) > 2)
-			ft_printf("\n%s:\n", *argv);
+		/* if ((argc - (options ? 1 : 0)) > 2) */
+			/* ft_printf("\n%s:\n", *argv); */
 		rv = process_file(*argv, options);
 		argv++;
 	}

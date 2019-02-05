@@ -70,7 +70,7 @@ t_env				*update_env(t_env *env)
 	return (env);
 }
 
-t_env				*get_env(char *filename)
+t_env				*get_env(char *filename, int options)
 {
 	t_env					*env;
 
@@ -79,6 +79,8 @@ t_env				*get_env(char *filename)
 	if (!(get_fileinfo(env, filename)))
 		return (NULL);
 	env->macho = env->filehead;
+	env->is_nm = options & NM_OP;
+	env->options = options ^ NM_OP;
 	if (!update_env(env))
 		return (NULL);
 	return (env);

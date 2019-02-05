@@ -21,7 +21,7 @@ static void		freetree(t_nmtree *root)
 	free(root);
 }
 
-int				process_macho(t_env *env, int options)
+int				process_macho(t_env *env)
 {
 	t_btinfo				*btinfo;
 	t_nmtree				*nmtree;
@@ -31,7 +31,7 @@ int				process_macho(t_env *env, int options)
 		return (-1);
 	if (!(btinfo = (t_btinfo*)get_btinfo(env, symtab)))
 		return (-1);
-	if (!(nmtree = (t_nmtree*)insert_symbols(env, btinfo, options)))
+	if (!(nmtree = (t_nmtree*)insert_symbols(env, btinfo)))
 		return (-1);
 	print_tree(nmtree, print_standard);
 	free(btinfo);

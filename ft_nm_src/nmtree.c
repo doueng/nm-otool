@@ -28,8 +28,8 @@ static t_nmtree		*create_nm_tree_node(t_env *env,
 	return (new);
 }
 
-static void			nmtree_insert(t_nmtree **root, t_nmtree *new, int options,
-									int (*cmpf)(t_nmtree *, t_nmtree *, int))
+static void			nmtree_insert(t_nmtree **root, t_nmtree *new,
+									int (*cmpf)(t_nmtree *, t_nmtree *))
 {
 	int cmp_ret;
 
@@ -38,16 +38,16 @@ static void			nmtree_insert(t_nmtree **root, t_nmtree *new, int options,
 		*root = new;
 		return ;
 	}
-	cmp_ret = (*cmpf)(*root, new, options);
+	cmp_ret = (*cmpf)(*root, new);
 	if (cmp_ret > 0)
-		nmtree_insert(&((*root)->right), new, options, cmpf);
+		nmtree_insert(&((*root)->right), new, cmpf);
 	else if (cmp_ret <= 0)
-		nmtree_insert(&((*root)->left), new, options, cmpf);
+		nmtree_insert(&((*root)->left), new, cmpf);
 }
 
 static void			*get_insert_function(int options)
 {
-	int (*cmpf)(t_nmtree *, t_nmtree *, int);
+	int (*cmpf)(t_nmtree *, t_nmtree *);
 
 	cmpf = alpha_order_compare;
 	cmpf = options & NUM_OP ? num_order_compare : cmpf;
@@ -55,7 +55,7 @@ static void			*get_insert_function(int options)
 	return (cmpf);
 }
 
-t_nmtree			*insert_symbols(t_env *env, t_btinfo *btinfo, int options)
+t_nmtree			*insert_symbols(t_env *env, t_btinfo *btinfo)
 {
 	char				*name;
 	t_nmtree			*new;
@@ -76,7 +76,7 @@ t_nmtree			*insert_symbols(t_env *env, t_btinfo *btinfo, int options)
 			if (!(new = create_nm_tree_node(env, nlist, name)))
 				return (NULL);
 			nmtree_insert(&symbols_root, new,
-							options, get_insert_function(options));
+							get_insert_function(env->options));
 		}
 		if (!(nlist = incbytes(env, nlist,
 						env->is_64 ? sizeof(*nlist) : sizeof(struct nlist))))

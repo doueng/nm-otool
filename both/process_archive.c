@@ -34,7 +34,7 @@ static long		get_num_ranlibs(uint8_t *bin)
 	return (*((long*)bin) / sizeof(struct ranlib));
 }
 
-int				process_archive(t_env *env, char *archive_name, int options)
+int				process_archive(t_env *env, char *archive_name)
 {
 	int						num_ranlib;
 	char					*filename;
@@ -57,7 +57,7 @@ int				process_archive(t_env *env, char *archive_name, int options)
 		ft_printf("\n%s(%s):\n", archive_name, filename);
 		free(filename);
 		env->filehead = move_past_ar_hdr(bin);
-		if (-1 == process_macho(env, options))
+		if (-1 == process_macho(env))
 			return (-1);
 		bin += ft_atoi((((struct ar_hdr*)bin)->ar_size));
 		bin += sizeof(struct ar_hdr);

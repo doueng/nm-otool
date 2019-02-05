@@ -66,11 +66,10 @@ static struct section		*get_text_section(t_env *env)
 	return (text_section);
 }
 
-int							process_macho(t_env *env, int options)
+int							process_macho(t_env *env)
 {
 	struct symtab_command	*symtab;
 
-	(void)options;
 	if (!(symtab = checksymtab(env)))
 		return (-1);
 	ft_printf("%s:\n", env->filename);

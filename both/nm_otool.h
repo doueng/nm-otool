@@ -35,6 +35,12 @@ enum
 	MALLOC_FAILED
 };
 
+# define NM_OP 0b1
+# define NUM_OP 0b10
+# define REV_OP 0b100
+# define P_OP 0b1000
+
+
 typedef struct					s_env
 {
 	struct mach_header_64		*macho;
@@ -44,6 +50,8 @@ typedef struct					s_env
 	char						*filename;
 	size_t						filesize;
 	void						*filehead;
+	int							options;
+	char						is_nm;
 }								t_env;
 
 uint32_t						rev_bytes32(uint32_t bytes);
@@ -54,15 +62,14 @@ void							*ft_error(int error, char *file, int line);
 int								ft_error_one(int error, char *file, int line);
 void							*incbytes_rev(t_env *env, void *mem, size_t inc_size);
 void							*incbytes(t_env *env, void *mem, size_t inc_size);
-t_env							*get_env(char *filename);
+t_env							*get_env(char *filename, int options);
 uint64_t						rev_bytes(t_env *env, uint64_t bytes);
-int								process_fat(t_env *env, int options);
+int								process_fat(t_env *env);
 int								is_fat(uint8_t *bin);
 int 							is_macho(uint8_t *bin);
 void							free_env(t_env *env);
-int								process_macho(t_env *env, int options);;
-int								process_archive(t_env *env, char *archive_name,
-												int options);
+int								process_macho(t_env *env);;
+int								process_archive(t_env *env, char *archive_name);
 int								is_archive(uint8_t *bin);
 struct section_64				*get_allsects(uint8_t *bin,
 											struct load_command *all_ldcmds,

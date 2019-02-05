@@ -15,10 +15,6 @@
 
 # include "../both/nm_otool.h"
 
-# define NUM_OP 0b1
-# define REV_OP 0b10
-# define P_OP 0b100
-
 typedef struct				s_nmtree
 {
 	char					*name;
@@ -36,19 +32,19 @@ typedef struct				s_btinfo
 }							t_btinfo;
 
 int							process_file(char *filename, int options);
-int							process_macho(t_env *env, int options);
+int							process_macho(t_env *env);
 struct load_command			*get_ldcmd(t_env *env, uint32_t cmd);
 t_btinfo					*get_btinfo(t_env *env,
 										struct symtab_command *symtab);
 t_nmtree					*insert_symbols(t_env *env,
-										t_btinfo *btinfo, int options);
+										t_btinfo *btinfo);
 void						print_tree(t_nmtree *symbol,
 										void (*print_function)(t_nmtree *));
 void						print_standard(t_nmtree *symbol);
 int							alpha_order_compare(t_nmtree *new,
-										t_nmtree *to_compare, int options);
+										t_nmtree *to_compare);
 int							num_order_compare(t_nmtree *new,
-										t_nmtree *to_compare, int options);
+										t_nmtree *to_compare);
 int							symbol_order_compare(t_nmtree *new,
-										t_nmtree *to_compare, int options);
+										t_nmtree *to_compare);
 #endif

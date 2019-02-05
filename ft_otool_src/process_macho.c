@@ -6,7 +6,7 @@
 /*   By: dengstra <dengstra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/27 13:25:31 by dengstra          #+#    #+#             */
-/*   Updated: 2019/02/05 18:30:30 by dengstra         ###   ########.fr       */
+/*   Updated: 2019/02/05 19:02:35 by dengstra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ static struct section_64	*get_text_section64(t_env *env)
 	return (text_section);
 }
 
-
-static struct section	*get_text_section(t_env *env)
+static struct section		*get_text_section(t_env *env)
 {
 	struct section				*text_section;
 	int							ncmds;
@@ -56,7 +55,8 @@ static struct section	*get_text_section(t_env *env)
 		if (rev_bytes(env, ldcmd->cmd) == LC_SEGMENT && segcmd->filesize > 0)
 		{
 			text_section = (struct section*)(++segcmd);
-			if (text_section->size <= 0 || ft_strcmp(text_section->sectname, "__text"))
+			if (text_section->size <= 0
+					|| ft_strcmp(text_section->sectname, "__text"))
 				return (0);
 			return (text_section);
 		}
@@ -70,7 +70,7 @@ int							process_macho(t_env *env, int options)
 {
 	struct symtab_command	*symtab;
 
-	(void)&options; // fix
+	(void)options;
 	if (!(symtab = checksymtab(env)))
 		return (-1);
 	ft_printf("%s:\n", env->filename);

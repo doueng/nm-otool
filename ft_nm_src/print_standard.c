@@ -6,7 +6,7 @@
 /*   By: dengstra <dengstra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/27 16:13:02 by dengstra          #+#    #+#             */
-/*   Updated: 2019/02/05 18:31:37 by dengstra         ###   ########.fr       */
+/*   Updated: 2019/02/05 18:57:10 by dengstra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static char			get_type_letter(t_nmtree *symbol)
 	type = nlist->n_type & N_TYPE;
 	letter = 'S';
 	letter = get_section_letter(symbol->env, nlist->n_sect, letter);
-	if (type == N_UNDF  && nlist->n_type & N_EXT)
+	if (type == N_UNDF && nlist->n_type & N_EXT)
 		letter = 'C';
 	letter = type == N_UNDF ? 'U' : letter;
 	letter = type == N_ABS ? 'A' : letter;
@@ -81,7 +81,7 @@ static char			get_type_letter(t_nmtree *symbol)
 	return (nlist->n_type & N_EXT ? letter : letter | 0x20);
 }
 
-void			print_standard(t_nmtree *symbol)
+void				print_standard(t_nmtree *symbol)
 {
 	struct nlist_64	*nlist;
 	t_env			*env;

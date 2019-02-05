@@ -6,24 +6,21 @@
 /*   By: dengstra <dengstra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/27 13:27:57 by dengstra          #+#    #+#             */
-/*   Updated: 2019/01/27 18:24:46 by dengstra         ###   ########.fr       */
+/*   Updated: 2019/02/05 19:06:49 by dengstra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __NM_OTOOL_H_
-#define __NM_OTOOL_H_
+#ifndef __NM_OTOOL_H
+# define __NM_OTOOL_H
 
-#include <stdlib.h>
-#include <mach-o/loader.h>
-#include <mach-o/swap.h>
-#include <ar.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <sys/mman.h>
-#include <sys/stat.h>
-#include "../libft/libft.h"
-
-# define error_msg(error) error, __FILE__, __LINE__
+# include <stdlib.h>
+# include <mach-o/loader.h>
+# include <mach-o/swap.h>
+# include <ar.h>
+# include <fcntl.h>
+# include <sys/mman.h>
+# include <sys/stat.h>
+# include "../libft/libft.h"
 
 enum
 {

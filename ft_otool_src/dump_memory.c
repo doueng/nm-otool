@@ -86,54 +86,6 @@ static void	dump64(t_env *env, struct section_64 *text_section)
 	}
 }
 
-/* static void	dump64(t_env *env, struct section_64 *text_section) */
-/* { */
-/* 	uint64_t	pos; */
-/* 	int			i; */
-/* 	int64_t		mem_size; */
-/* 	uint8_t		*mem; */
-
-/* 	mem = (uint8_t*)env->macho; */
-/* 	pos = rev_bytes(env, text_section->addr); */
-/* 	mem += rev_bytes(env, text_section->offset); */
-/* 	mem_size = rev_bytes(env, text_section->size); */
-/* 	while (mem_size > 0) */
-/* 	{ */
-/* 		ft_printf("%016llx\t", pos); */
-/* 		i = 0; */
-/* 		while (i++ < 16 && mem_size--) */
-/* 			ft_printf("%02x ", *mem++); */
-/* 		pos += 16; */
-/* 		ft_putchar('\n'); */
-/* 	} */
-/* } */
-
-
-/*  static void	dump32(t_env *env, struct section *text_section) */
-/*  { */
-/* 	 uint8_t		*mem; */
-/* 	 uint32_t		pos; */
-/* 	 int32_t		mem_size; */
-/* 	 int			i; */
-
-/* 	mem = (uint8_t*)env->macho; */
-/* 	pos = rev_bytes(env, text_section->addr); */
-/* 	mem += rev_bytes(env, text_section->offset); */
-/* 	mem_size = rev_bytes(env, text_section->size); */
-/* 	while (mem_size > 0) */
-/* 	{ */
-/* 		ft_printf("%08x\t", pos); */
-/* 		i = 0; */
-/* 		while (i++ < 16 && mem_size--) */
-/* 			if  (18 == rev_bytes(env, env->macho->cputype)) */
-/* 				ft_printf("%02x%s", *mem++, i % 4 == 0 ? " " : ""); */
-/* 			else */
-/* 				ft_printf("%02x ", *mem++); */
-/* 		pos += 16; */
-/* 		ft_putchar('\n'); */
-/* 	} */
-/* } */
-
 int			dump_memory(t_env *env, void *text_section)
 {
 	if (!text_section)

@@ -36,9 +36,9 @@ enum
 };
 
 # define NM_OP 0b1
-# define NUM_OP 0b10
+# define VAL_OP 0b10
 # define REV_OP 0b100
-# define P_OP 0b1000
+# define SYM_OP 0b1000
 
 
 typedef struct					s_env

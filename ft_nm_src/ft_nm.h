@@ -43,7 +43,7 @@ void						print_tree(t_nmtree *symbol,
 void						print_standard(t_nmtree *symbol);
 int							alpha_order_compare(t_nmtree *new,
 										t_nmtree *to_compare);
-int							num_order_compare(t_nmtree *new,
+int							value_order_compare(t_nmtree *new,
 										t_nmtree *to_compare);
 int							symbol_order_compare(t_nmtree *new,
 										t_nmtree *to_compare);

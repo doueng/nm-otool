@@ -21,8 +21,8 @@ static int	get_options(char *op_str)
 	if (op_str[0] != '-')
 		return (options);
 	options |= ft_strchr(op_str, 'r') ? REV_OP : 0;
-	options |= ft_strchr(op_str, 'n') ? NUM_OP : 0;
-	options |= ft_strchr(op_str, 'p') ? P_OP : 0;
+	options |= ft_strchr(op_str, 'v') ? VAL_OP : 0;
+	options |= ft_strchr(op_str, 's') ? SYM_OP : 0;
 	return (options);
 }
 
@@ -37,8 +37,8 @@ int			main(int argc, char *argv[])
 		process_file("a.out", options);
 	while (*argv)
 	{
-		/* if ((argc - (options ? 1 : 0)) > 2) */
-			/* ft_printf("\n%s:\n", *argv); */
+		if ((argc - (options > 1 ? 1 : 0)) > 2)
+			ft_printf("\n%s:\n", *argv);
 		rv = process_file(*argv, options);
 		argv++;
 	}

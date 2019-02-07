@@ -23,8 +23,8 @@
 # include "../libft/libft.h"
 
 # define NM_OP 		0b1
-# define VAL_OP 	0b10
-# define REV_OP 	0b100
+# define REV_OP 	0b10
+# define VAL_OP 	0b100
 # define SYM_OP 	0b1000
 # define UNDEF_OP 	0b10000
 # define TEXT_OP 	0b100000
@@ -40,7 +40,8 @@ enum
 	MMAP_FAILED,
 	NO_SYMTAB,
 	INVALID_ARG,
-	MALLOC_FAILED
+	MALLOC_FAILED,
+	INVALID_OPTION
 };
 
 typedef struct				s_env

@@ -15,7 +15,7 @@ NM = ft_nm
 LIBFT = ../libft
 LIB = ../libft/libft.a
 
-FLAGS = -Werror -Wextra -Wall -g
+FLAGS = -Werror -Wextra -Wall
 
 SRC_NM = $(wildcard *.c ../both/*.c)
 

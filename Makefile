@@ -31,5 +31,7 @@ clean:
 fclean: clean
 	@make fclean -C $(OTOOL_FOLDER)
 	@make fclean -C $(NM_FOLDER)
+	@/bin/rm -f $(NM)
+	@/bin/rm -f $(OTOOL)
 
 re: fclean all

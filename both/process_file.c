@@ -25,7 +25,9 @@ static int	invalid_file(char *filename)
 		return (ft_error_one(CORRUPT_FILE, __FILE__, __LINE__));
 	if (st.st_mode & S_IFDIR)
 		return (ft_error_one(INVALID_FILE, __FILE__, __LINE__));
-	return (close(fd));
+	if (-1 == close(fd))
+		return (ft_error_one(CLOSE_FAILED, __FILE__, __LINE__));
+	return (0);
 }
 
 static int	processor(t_env *env)
@@ -50,7 +52,7 @@ int			process_file(char *filename, int options)
 
 	rv = 0;
 	if (-1 == invalid_file(filename))
-		return (ft_error_one(CLOSE_FAILED, __FILE__, __LINE__));
+		return (-1);
 	if (!(env = get_env(filename, options)))
 		return (-1);
 	if (-1 == processor(env))

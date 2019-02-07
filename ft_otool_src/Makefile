@@ -3,7 +3,7 @@ OTOOL = ft_otool
 LIBFT = ../libft
 LIB = ../libft/libft.a
 
-FLAGS = -Werror -Wextra -Wall -g
+FLAGS = -Werror -Wextra -Wall
 
 SRC_OTOOL = $(wildcard *.c ../both/*.c)
 

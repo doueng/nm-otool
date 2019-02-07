@@ -26,6 +26,8 @@ static void		print_msg(int error, char *file, int line)
 	msg = (error == NO_SYMTAB) ? "no symtab" : msg;
 	msg = (error == INVALID_ARG) ? "Invalid arg" : msg;
 	msg = (error == MALLOC_FAILED) ? "malloc failed" : msg;
+	msg = (error == INVALID_OPTION) ? "Usage: ./ft_nm -[rvust]" : msg;
+	ft_printf("ERROR: %s\n", msg);
 	(void)file;
 	(void)line;
 }

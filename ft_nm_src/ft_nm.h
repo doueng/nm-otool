@@ -31,9 +31,6 @@ typedef struct				s_btinfo
 	char					*symtabstr;
 }							t_btinfo;
 
-int							process_file(char *filename, int options);
-int							process_macho(t_env *env);
-struct load_command			*get_ldcmd(t_env *env, uint32_t cmd);
 t_btinfo					*get_btinfo(t_env *env,
 										struct symtab_command *symtab);
 t_nmtree					*insert_symbols(t_env *env,

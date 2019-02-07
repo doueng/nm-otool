@@ -50,7 +50,6 @@ static char		*print_cpuname(t_env *env, void *arch)
 		? "ppc" : cpu_name;
 	ft_printf(format_str, env->filename, cpu_name);
 	return (cpu_name);
-
 }
 
 static int		process_all_archs(t_env *env,
@@ -110,6 +109,7 @@ int				process_fat(t_env *env)
 	fat_env.rev_bytes = 1;
 	fat_env.is_64 = hd.magic == FAT_MAGIC_64 || hd.magic == FAT_CIGAM_64;
 	rv = process_arch_x86_64(env, &fat_env, num_archs);
+	env->options |= IS_FAT_OP;
 	if (rv == 1)
 		return (process_all_archs(env, &fat_env, num_archs));
 	return (rv);

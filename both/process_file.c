@@ -28,14 +28,12 @@ static int	invalid_file(char *filename)
 	return (close(fd));
 }
 
-static int	processor(t_env *env, char *filename)
+static int	processor(t_env *env)
 {
 	uint32_t			header;
 
 	header = *((uint32_t*)(env->filehead));
-	if (ft_memcmp(env->filehead, ARMAG, SARMAG) == 0)
-		return (process_archive(env, filename));
-	else if (header == FAT_MAGIC_64 || header == FAT_CIGAM)
+	if (header == FAT_MAGIC_64 || header == FAT_CIGAM)
 		return (process_fat(env));
 	else if (header == MH_MAGIC_64
 			|| header == MH_MAGIC
@@ -55,7 +53,7 @@ int			process_file(char *filename, int options)
 		return (ft_error_one(CLOSE_FAILED, __FILE__, __LINE__));
 	if (!(env = get_env(filename, options)))
 		return (-1);
-	if (-1 == processor(env, filename))
+	if (-1 == processor(env))
 		rv = ft_error_one(INVALID_FILE, __FILE__, __LINE__);
 	free(env);
 	return (rv);

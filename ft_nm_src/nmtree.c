@@ -60,10 +60,10 @@ t_nmtree			*insert_symbols(t_env *env, t_btinfo *btinfo)
 	char				*name;
 	t_nmtree			*new;
 	struct nlist_64		*nlist;
-	t_nmtree			*symbols_root;
+	t_nmtree			*root;
 
 	nlist = btinfo->nlist;
-	symbols_root = NULL;
+	root = NULL;
 	while (btinfo->nsyms--)
 	{
 		if ((nlist->n_type & N_STAB) == 0)
@@ -75,14 +75,13 @@ t_nmtree			*insert_symbols(t_env *env, t_btinfo *btinfo)
 				return (ft_error(INVALID_FILE, __FILE__, __LINE__));
 			if (!(new = create_nm_tree_node(env, nlist, name)))
 				return (NULL);
-			nmtree_insert(&symbols_root, new,
-							get_insert_function(env->options));
+			nmtree_insert(&root, new, get_insert_function(env->options));
 		}
 		if (!(nlist = incbytes(env, nlist,
 						env->is_64 ? sizeof(*nlist) : sizeof(struct nlist))))
 			return (ft_error(CORRUPT_FILE, __FILE__, __LINE__));
 	}
-	return (symbols_root);
+	return (root);
 }
 
 void				print_tree(t_nmtree *symbol,

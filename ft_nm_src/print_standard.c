@@ -97,18 +97,14 @@ void				print_standard(t_nmtree *symbol)
 	{
 		nlist->n_value == 0 && nlist->n_type == N_EXT
 			? ft_printf("%16c U %s\n", ' ', symbol->name)
-			: ft_printf("%016llx %c %s\n",
-					rev_bytes(env, nlist->n_value),
-					type_letter,
-					symbol->name);
+			: ft_printf("%016llx %c %s\n", rev_bytes(env, nlist->n_value),
+					type_letter, symbol->name);
 	}
 	else
 	{
 		(uint32_t)nlist->n_value == 0 && nlist->n_type == N_EXT
 			? ft_printf("%8c U %s\n", ' ', symbol->name)
-			: ft_printf("%08x %c %s\n",
-					rev_bytes(env, nlist->n_value),
-					type_letter,
-					symbol->name);
+			: ft_printf("%08x %c %s\n", rev_bytes(env, nlist->n_value),
+					type_letter, symbol->name);
 	}
 }

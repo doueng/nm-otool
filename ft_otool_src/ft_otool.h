@@ -16,7 +16,5 @@
 # include "../both/nm_otool.h"
 
 int							dump_memory(t_env *env, void *text_section);
-int							process_file(char *filename, int options);
-int							process_macho(t_env *env);
 
 #endif

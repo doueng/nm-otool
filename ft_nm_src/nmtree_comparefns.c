@@ -33,7 +33,7 @@ int		alpha_order_compare(t_nmtree *new, t_nmtree *to_compare)
 
 int		value_order_compare(t_nmtree *new, t_nmtree *to_compare)
 {
-	int 	rev;
+	int		rev;
 	int64_t	x;
 	int64_t	y;
 
@@ -53,4 +53,3 @@ int		symbol_order_compare(t_nmtree *new, t_nmtree *to_compare)
 	(void)to_compare;
 	return (1);
 }
-

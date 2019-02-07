@@ -72,7 +72,8 @@ int							process_macho(t_env *env)
 
 	if (!(symtab = checksymtab(env)))
 		return (-1);
-	ft_printf("%s:\n", env->filename);
+	if ((env->options & IS_FAT_OP) == 0)
+		ft_printf("%s:\n", env->filename);
 	ft_printf("Contents of (__TEXT,__text) section\n");
 	if (env->is_64)
 		return (dump_memory(env, get_text_section64(env)));

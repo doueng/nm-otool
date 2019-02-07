@@ -23,6 +23,8 @@ static int	get_options(char *op_str)
 	options |= ft_strchr(op_str, 'r') ? REV_OP : 0;
 	options |= ft_strchr(op_str, 'v') ? VAL_OP : 0;
 	options |= ft_strchr(op_str, 's') ? SYM_OP : 0;
+	options |= ft_strchr(op_str, 'u') ? UNDEF_OP : 0;
+	options |= ft_strchr(op_str, 't') ? TEXT_OP : 0;
 	return (options);
 }
 

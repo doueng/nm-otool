@@ -50,8 +50,8 @@ static void			*get_insert_function(int options)
 	int (*cmpf)(t_nmtree *, t_nmtree *);
 
 	cmpf = alpha_order_compare;
-	cmpf = options & NUM_OP ? value_order_compare : cmpf;
-	cmpf = options & P_OP ? symbol_order_compare : cmpf;
+	cmpf = options & VAL_OP ? value_order_compare : cmpf;
+	cmpf = options & SYM_OP ? symbol_order_compare : cmpf;
 	return (cmpf);
 }
 

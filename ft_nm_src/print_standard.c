@@ -90,6 +90,9 @@ void				print_standard(t_nmtree *symbol)
 	env = symbol->env;
 	nlist = symbol->nlist;
 	type_letter = get_type_letter(symbol);
+	if (((type_letter | 0x20) != 't' && symbol->env->options & TEXT_OP)
+		|| ((type_letter | 0x20) != 'u' && symbol->env->options & UNDEF_OP))
+		return ;
 	if (symbol->env->is_64)
 	{
 		nlist->n_value == 0 && nlist->n_type == N_EXT

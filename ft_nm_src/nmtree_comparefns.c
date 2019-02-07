@@ -53,3 +53,4 @@ int		symbol_order_compare(t_nmtree *new, t_nmtree *to_compare)
 	(void)to_compare;
 	return (1);
 }
+

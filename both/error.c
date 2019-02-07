@@ -26,12 +26,14 @@ static void		print_msg(int error, char *file, int line)
 	msg = (error == NO_SYMTAB) ? "no symtab" : msg;
 	msg = (error == INVALID_ARG) ? "Invalid arg" : msg;
 	msg = (error == MALLOC_FAILED) ? "malloc failed" : msg;
-	ft_putstr_fd("ERROR:\t", 2);
-	ft_putendl_fd(msg, 2);
-	ft_putstr_fd("FILE:\t", 2);
-	ft_putendl_fd(file, 2);
-	ft_putstr_fd("LINE:\t", 2);
-	ft_putendl_fd(ft_itoa(line), 2);
+	(void)file;
+	(void)line;
+	/* ft_putstr_fd("ERROR:\t", 2); */
+	/* ft_putendl_fd(msg, 2); */
+	/* ft_putstr_fd("FILE:\t", 2); */
+	/* ft_putendl_fd(file, 2); */
+	/* ft_putstr_fd("LINE:\t", 2); */
+	/* ft_putendl_fd(ft_itoa(line), 2); */
 }
 
 void			*ft_error(int error, char *file, int line)

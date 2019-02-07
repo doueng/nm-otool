@@ -67,7 +67,7 @@ int							ft_error_one(int error, char *file, int line);
 void						*incbytes_rev(t_env *env, void *mem,
 										size_t inc_size);
 void						*incbytes(t_env *env, void *mem, size_t inc_size);
-t_env						*get_env(char *filename, int options);
+t_env						*get_env(t_env *env, char *filename, int options);
 int							process_fat(t_env *env);
 int							process_macho(t_env *env);
 int							process_file(char *filename, int options);

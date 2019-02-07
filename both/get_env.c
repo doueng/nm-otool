@@ -70,12 +70,8 @@ t_env				*update_env(t_env *env)
 	return (env);
 }
 
-t_env				*get_env(char *filename, int options)
+t_env				*get_env(t_env *env, char *filename, int options)
 {
-	t_env					*env;
-
-	if (!(env = (t_env*)ft_memalloc(sizeof(t_env))))
-		return (ft_error(MALLOC_FAILED, __FILE__, __LINE__));
 	if (!(get_fileinfo(env, filename)))
 		return (NULL);
 	env->macho = env->filehead;

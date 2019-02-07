@@ -10,36 +10,49 @@
 #                                                                              #
 # **************************************************************************** #
 
-NM = ft_nm
+NM = ../ft_nm
 
 LIBFT = ../libft
 LIB = ../libft/libft.a
 
 FLAGS = -Werror -Wextra -Wall
 
-SRC_NM = $(wildcard *.c ../both/*.c)
+SRC_NM = ft_nm.c \
+	 getters.c \
+	 nmtree.c \
+	 nmtree_comparefns.c \
+	 print_standard.c \
+	 process_macho.c \
+	 ../both/checksymtab.c \
+	 ../both/error.c \
+	 ../both/get_env.c \
+	 ../both/get_filename.c \
+	 ../both/incbytes.c \
+	 ../both/process_fat.c \
+	 ../both/process_file.c \
+	 ../both/rev_bytes.c \
 
 SRCO_NM = $(SRC_NM:.c=.o)
 
 all: $(NM)
 
 $(NM): $(SRCO_NM) $(LIB)
-	@gcc $(SRCO_NM) $(LIB) -o $(NM)
+	gcc $(SRCO_NM) $(LIB) -o $(NM)
 
 $(LIB):
-	@make -C $(LIBFT)
+	make -C $(LIBFT)
 
 %.o: %.c
-	@gcc -c $(FLAGS) $< -o $@
+	gcc -c $(FLAGS) $< -o $@
 
 clean:
-	@/bin/rm -f $(SRCO_NM)
-	@/bin/rm -rf $(NM).dSYM
-	@/bin/rm -f compile_commands.json
-	@make -C $(LIBFT) clean
+	/bin/rm -f $(SRCO_NM)
+	/bin/rm -rf $(NM).dSYM
+	/bin/rm -f compile_commands.json
+	make -C $(LIBFT) clean
 
 fclean: clean
-	@/bin/rm -f $(NM)
-	@make -C $(LIBFT) fclean
+	/bin/rm -f $(NM)
+	make -C $(LIBFT) fclean
 
 re: fclean all

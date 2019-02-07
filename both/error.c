@@ -20,7 +20,7 @@ static void		print_msg(int error, char *file, int line)
 	msg = (error == CORRUPT_FILE) ? "Corrupt file" : msg;
 	msg = (error == INVALID_FILE) ? "Invalid file" : msg;
 	msg = (error == FSTAT_FAILED) ? "fstat failed" : msg;
-	msg = (error == OPEN_FAILED) ? "open failed" : msg;
+	msg = (error == OPEN_FAILED) ? "Could not open file" : msg;
 	msg = (error == CLOSE_FAILED) ? "close failed" : msg;
 	msg = (error == MMAP_FAILED) ? "mmap failed" : msg;
 	msg = (error == NO_SYMTAB) ? "no symtab" : msg;

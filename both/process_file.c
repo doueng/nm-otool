@@ -47,16 +47,14 @@ static int	processor(t_env *env)
 
 int			process_file(char *filename, int options)
 {
-	int					rv;
-	t_env				*env;
+	t_env				env;
 
-	rv = 0;
+	ft_bzero(&env, sizeof(env));
 	if (-1 == invalid_file(filename))
 		return (-1);
-	if (!(env = get_env(filename, options)))
+	if (!(get_env(&env, filename, options)))
 		return (-1);
-	if (-1 == processor(env))
-		rv = ft_error_one(INVALID_FILE, __FILE__, __LINE__);
-	free(env);
-	return (rv);
+	if (-1 == processor(&env))
+		return (ft_error_one(INVALID_FILE, __FILE__, __LINE__));
+	return (0);
 }

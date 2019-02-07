@@ -47,6 +47,8 @@ int			main(int argc, char *argv[])
 		return (-1);
 	if (options > 1)
 		argv++;
+	if (!*argv)
+		return (ft_error_one(INVALID_OPTION, __FILE__, __LINE__));
 	while (*argv)
 	{
 		if ((argc - (options > 1 ? 1 : 0)) > 2)

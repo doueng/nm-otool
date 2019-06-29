@@ -1,9 +1,0 @@
-a.out
-compile_commands.json
-*.o
-*.dSYM
-unit_test_nm_otool
-ft_nm
-ft_otool
-.DS_Store
-test.sh
